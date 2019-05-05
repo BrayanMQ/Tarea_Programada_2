@@ -13,9 +13,6 @@ def funcionBotonBuscar():
     id = json_body["id"]
     frase = json_body["starWarsQuote"]
 
-    print(id, frase)
-
-
 
 def funcionBotonShare():
-    print("Hola")
+    print("")
