@@ -3,8 +3,7 @@
 # Última modificación: 02/04/2019 11:20pm
 # Versión: 3.7.2
 
-from json import *
-from requests import *
+
 
 def funcionBotonBuscar():
     r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
@@ -12,6 +11,7 @@ def funcionBotonBuscar():
 
     id = json_body["id"]
     frase = json_body["starWarsQuote"]
+    print(id, frase)
 
 
 def funcionBotonShare():
