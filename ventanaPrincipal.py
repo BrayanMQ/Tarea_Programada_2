@@ -12,7 +12,13 @@ from tkinter import *
 
 # Definición de fuciones
 
-def generarMatiz(id, frase, nombre):
+def generarCodigoAplicacion(nombre):
+    ultimaLetra = len(nombre)-1
+    serial = generarCodigoContador(len(listaMatriz))
+    codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
+    return codigo
+
+def generarMatriz(id, frase, nombre):
 
     for fila in listaMatriz:
         if fila[0] == nombre:
@@ -24,7 +30,8 @@ def generarMatiz(id, frase, nombre):
     nuevoPersonaje.append(nombre)
     nuevoPersonaje.append([frase])
     nuevoPersonaje.append([id])
-    nuevoPersonaje.append("123")
+    codigoAplicacion = generarCodigoAplicacion(nombre)
+    nuevoPersonaje.append(codigoAplicacion)
     listaMatriz.append(nuevoPersonaje)
 
 
@@ -40,7 +47,19 @@ def separarNombre(frase):
     for i in range(largo, 0, -1):
         if frase[i] == "-" or frase[i] == "?" or frase[i] == "—":
             nombre = frase[i + 2:]
+            if nombre == "on Jinn":
+                nombre = "Qui-Gon Jinn"
+            elif nombre == "PO":
+                nombre = "C-3PO"
+            elif nombre == "an Kenobi":
+                nombre = "Obi-Wan Kenobi"
+            elif nombre == "SO":
+                nombre = "K-2SO"
+            elif nombre == "Riyo Chuchi (Season One, Episode 15, Trespass)":
+                nombre = "Riyo Chuchi"
+
             return nombre
+    return "Error"
 
 def mostrarFrases():
     txt_Area.config(state="normal")
@@ -63,6 +82,14 @@ def generarCodigoContador(num):
 
     return codigo
 
+def obtenerFrase(frase, nombre):
+    if not nombre == "Riyo Chuchi": #Es la excepción porque incluye el episodio
+        frase = frase[:(len(frase) - len(nombre)) - 3]
+    else:
+        frase = frase[:(len(frase) - len(nombre)) - 38]
+
+    return frase
+
 def funcionBotonBuscar():
     cantidad = txt_Buscar.get()
 
@@ -79,10 +106,10 @@ def funcionBotonBuscar():
         id = json_body["id"]
         frase = json_body["starWarsQuote"]
         nombre = separarNombre(frase)
-        frase = frase[:len(frase) - len(nombre)]
+        frase = obtenerFrase(frase, nombre)
 
         if not verificarFrase(id):
-            generarMatiz(id, frase, nombre)
+            generarMatriz(id, frase, nombre)
 
     mostrarFrases()
 
@@ -119,12 +146,12 @@ txt_Area = Text(frame, wrap=NONE)
 txt_Area.grid(row=1, column=0, padx=10, pady=10)
 txt_Area.config(state="disabled")
 
-scrollVertical = Scrollbar(frame, command=txt_Area.yview())
-scrollVertical.grid(row=1, column=1, sticky="ns")
+scrollVertical = Scrollbar(frame, orient=VERTICAL, command=txt_Area.yview)
+scrollVertical.grid(row=1, column=1, sticky='nsew')
 txt_Area['yscrollcommand'] = scrollVertical.set
 
-scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL)
-scrollHorizontal.grid(row=2, column=0, sticky="news")
+scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL, command=txt_Area.xview)
+scrollHorizontal.grid(row=2, column=0, sticky='nsew')
 txt_Area['xscrollcommand'] = scrollHorizontal.set
 
 # Creación widgets
