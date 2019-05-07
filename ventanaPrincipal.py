@@ -7,7 +7,6 @@
 
 from json import *
 from requests import *
-from funciones import *
 from tkinter import *
 
 
@@ -102,15 +101,18 @@ lbl_Titulo.grid(row=0, column=0, padx=10, pady=10, sticky="n")
 lbl_Titulo.config(font="Helvetica")
 
 # Creación text area
-txt_Area = Text(frame)
+
+txt_Area = Text(frame, wrap=NONE)
 txt_Area.grid(row=1, column=0, padx=10, pady=10)
 txt_Area.config(state="disabled")
 
 scrollVertical = Scrollbar(frame, command=txt_Area.yview())
-scrollVertical.grid(row=1, column=1, sticky="nsew")
+scrollVertical.grid(row=1, column=1, sticky="ns")
 txt_Area['yscrollcommand'] = scrollVertical.set
 
-
+scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL)
+scrollHorizontal.grid(row=2, column=0, sticky="news")
+txt_Area['xscrollcommand'] = scrollHorizontal.set
 
 # Creación widgets
 
