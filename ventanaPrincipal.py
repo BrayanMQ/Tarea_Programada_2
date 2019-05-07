@@ -13,11 +13,13 @@ from tkinter import *
 # Definición de fuciones
 
 def generarMatiz(id, frase, nombre):
+
     for fila in listaMatriz:
         if fila[0] == nombre:
             fila[1].append(frase)
             fila[2].append(id)
             return ""
+
     nuevoPersonaje = []
     nuevoPersonaje.append(nombre)
     nuevoPersonaje.append([frase])
@@ -49,6 +51,17 @@ def mostrarFrases():
         txt_Area.insert(INSERT, "\n ")
 
     txt_Area.config(state="disabled")
+
+def generarCodigoContador(num):
+
+    if num <= 9:
+        codigo = "00" + str(num)
+    elif num <= 99:
+        codigo = "0" + str(num)
+    elif num >= 100:
+        codigo = str(num)
+
+    return codigo
 
 def funcionBotonBuscar():
     cantidad = txt_Buscar.get()
