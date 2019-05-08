@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/ventanaPrincipal.py" line="163" mnemonic="2" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ventanaPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/ventanaPrincipal.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,10 +19,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="519">
-              <caret line="110" column="34" lean-forward="true" selection-start-line="110" selection-start-column="34" selection-end-line="110" selection-end-column="34" />
+            <state relative-caret-position="2119">
+              <caret line="239" column="4" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="4" />
               <folding>
-                <element signature="e#196#214#0" expanded="true" />
+                <element signature="e#196#228#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -52,9 +56,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="673" />
-    <option name="width" value="694" />
-    <option name="height" value="745" />
+    <option name="x" value="695" />
+    <option name="y" value="254" />
+    <option name="width" value="854" />
+    <option name="height" value="712" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -63,17 +68,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Tarea_Programada_2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tarea_Programada_2" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -180,15 +175,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1748879" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14646997" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49850523" weight="0.25120774" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3993559" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49850523" visible="true" weight="0.24918744" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49947312" weight="0.32936078" />
@@ -256,6 +252,22 @@
     <MESSAGE value="El personaje y la frase ya los tira bien, y ya genera el código de aplicación para cada personaje" />
     <option name="LAST_COMMIT_MESSAGE" value="El personaje y la frase ya los tira bien, y ya genera el código de aplicación para cada personaje" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>154</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/requests/sessions.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -264,17 +276,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
     <entry file="file://$PROJECT_DIR$/imagenes/bg.jpg" />
     <entry file="file://C:/Program Files (x86)/Python37-32/Lib/tkinter/__init__.py" />
     <entry file="file://$PROJECT_DIR$/funciones.py" />
     <entry file="file://$USER_HOME$/PycharmProjects/untitled/venv/Lib/site-packages/requests/adapters.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="1282" selection-start-line="1282" selection-end-line="1282" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="110" column="34" lean-forward="true" selection-start-line="110" selection-start-column="34" selection-end-line="110" selection-end-column="34" />
+        <state relative-caret-position="2119">
+          <caret line="239" column="4" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="4" />
           <folding>
-            <element signature="e#196#214#0" expanded="true" />
+            <element signature="e#196#228#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -5,12 +5,94 @@
 
 # Importación de funciones
 
+from socket import gethostbyname, create_connection, error
+
+import pickle
 from json import *
 from requests import *
 from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+import time
 
+
+#Variables globales
+archivoBackUp = "BackUp.xml"
+listaMatriz = []
+dicc = {}
+mayorCantidadFrases = 0
 
 # Definición de fuciones
+
+def comprobarConexion():
+    try:
+        gethostbyname("google.com")
+        conexion = create_connection(("google.com", 80), 1)
+        conexion.close()
+        return True
+    except error:
+        return False
+
+def graba(nomArchGrabar, lista):
+    """
+    Función: Graba el nombre del archivo.
+    Entradas: nomArchGrabar(str) Nombre que se le pondrá al archivo, lista(list) Lista que se guardará
+    Salidas: NA
+    """
+    try:
+        f = open(nomArchGrabar, "wb")
+        pickle.dump(lista, f)
+        f.close()
+    except:
+        print("\nError al grabar el archivo: \n", nomArchGrabar)
+
+
+def lee(nomArchLeer):
+    """
+    Función: Lee el archivo "canciones"
+    Entradas: nomArchLeer(string) Es el nombre del archivo
+    Salidas: Retorna lista
+    """
+    lista = []
+    try:
+        f = open(nomArchLeer, "rb")
+        lista = pickle.load(f)
+        f.close()
+    except:
+        print(
+            "\nError al leer el archivo: " + nomArchLeer + ". Cuando se guarde una nueva persona, el archivo se creará"
+                                                           " automáticamente.")
+    return lista
+
+
+def obtenerNombreArchivo():
+
+    fecha = time.strftime("%d-%m-%Y-%I-%M-%S")
+    fecha = fecha + ".xml"
+    return fecha
+
+def obtenerPersonajeMasFrases(diccPersonajes, listaMatriz, pMayorCantidadFrases):
+    codigosPersonaje = list(diccPersonajes.keys())
+    mayorCantidadFrases = pMayorCantidadFrases
+    for codigo in codigosPersonaje:
+        cantidadFrases = diccPersonajes[codigo]
+        if cantidadFrases > mayorCantidadFrases:
+            mayorCantidadFrases = cantidadFrases
+            for dato in listaMatriz:
+                if codigo == dato[3]:
+                    nombrePersonaje = dato[0]
+                    break
+    print(nombrePersonaje)
+    return nombrePersonaje
+
+def generarDiccionario(listaMatriz):
+    for datos in listaMatriz:
+        codigoPersonaje = datos[3]
+        cantidadFrases = len(datos[2])
+        dicc[codigoPersonaje] = cantidadFrases
+
+    print(dicc)
+    return dicc
 
 def generarCodigoAplicacion(nombre):
     ultimaLetra = len(nombre)-1
@@ -32,6 +114,9 @@ def generarMatriz(id, frase, nombre):
     nuevoPersonaje.append([id])
     codigoAplicacion = generarCodigoAplicacion(nombre)
     nuevoPersonaje.append(codigoAplicacion)
+
+
+
     listaMatriz.append(nuevoPersonaje)
 
 
@@ -66,8 +151,17 @@ def mostrarFrases():
     txt_Area.delete('1.0', END)
 
     for personaje in listaMatriz:
-        txt_Area.insert(INSERT, str(personaje) + "\n")
-        txt_Area.insert(INSERT, "\n ")
+        if len(personaje[1]) == 1:
+            frase = personaje[1][0]
+            txt_Area.insert(INSERT, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
+                            + personaje[0] + "\n")
+            txt_Area.insert(INSERT, "\n")
+        else:
+            for frase in personaje[1]:
+                txt_Area.insert(INSERT, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
+                                + personaje[0] + "\n")
+                txt_Area.insert(INSERT, "\n")
+
 
     txt_Area.config(state="disabled")
 
@@ -90,11 +184,23 @@ def obtenerFrase(frase, nombre):
 
     return frase
 
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("!")
+    label = ttk.Label(popup, text=msg, font="Helvetica")
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
+    B1.pack()
+    popup.mainloop()
+
 def funcionBotonBuscar():
     cantidad = txt_Buscar.get()
 
     try:
         cantidad = int(cantidad)
+
+        if cantidad > 50:
+            return popupmsg("Error")
     except:
         return ""
 
@@ -112,15 +218,20 @@ def funcionBotonBuscar():
             generarMatriz(id, frase, nombre)
 
     mostrarFrases()
+    diccPersonajes = generarDiccionario(listaMatriz)
 
+    personaje = obtenerPersonajeMasFrases(diccPersonajes, listaMatriz, mayorCantidadFrases)
+    lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
 
 
 def funcionBotonShare():
+    if comprobarConexion():
+        enviarCorreo()
+    else:
+        popupmsg("No hay conexión a Internet.")
+
+def enviarCorreo():
     print("")
-
-
-# Variables globales
-listaMatriz = []
 
 # Creación de la ventana
 root = Tk()
@@ -165,7 +276,7 @@ btn_Share.place(x=691, y=100)
 btn_Share.config(font="Helvetica")
 
 lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
-lbl_Apariciones.grid(row=1, column=2, padx=10, pady=10, sticky="s")
+lbl_Apariciones.place(x=691, y=425)
 lbl_Apariciones.config(font="Helvetica")
 
 btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, height=1)
