@@ -14,7 +14,7 @@ from tkinter import *
 
 def generarCodigoAplicacion(nombre):
     ultimaLetra = len(nombre)-1
-    serial = generarCodigoContador(len(listaMatriz))
+    serial = generarCodigoContador(len(listaMatriz)+1)
     codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
     return codigo
 
