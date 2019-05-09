@@ -71,11 +71,11 @@ def obtenerNombreArchivo():
     fecha = fecha + ".xml"
     return fecha
 
-def obtenerPersonajeMasFrases(diccPersonajes, listaMatriz, pMayorCantidadFrases):
-    codigosPersonaje = list(diccPersonajes.keys())
+def obtenerPersonajeMasFrases(pMayorCantidadFrases):
+    codigosPersonaje = list(dicc.keys())
     mayorCantidadFrases = pMayorCantidadFrases
     for codigo in codigosPersonaje:
-        cantidadFrases = diccPersonajes[codigo]
+        cantidadFrases = dicc[codigo]
         if cantidadFrases > mayorCantidadFrases:
             mayorCantidadFrases = cantidadFrases
             for dato in listaMatriz:
@@ -85,14 +85,20 @@ def obtenerPersonajeMasFrases(diccPersonajes, listaMatriz, pMayorCantidadFrases)
     print(nombrePersonaje)
     return nombrePersonaje
 
-def generarDiccionario(listaMatriz):
-    for datos in listaMatriz:
-        codigoPersonaje = datos[3]
-        cantidadFrases = len(datos[2])
-        dicc[codigoPersonaje] = cantidadFrases
+def generarDiccionario(nombre):
+    for dato in listaMatriz:
+        if dato[0] == nombre:
+            codigoPersonaje = dato[3]
+            try:
+                cantidadFrases = dicc[codigoPersonaje]
+            except:
+                cantidadFrases = 0
+            cantidadFrases += 1
+            dicc[codigoPersonaje] = cantidadFrases
+            #print(dicc)
+            return dicc
 
-    print(dicc)
-    return dicc
+
 
 def generarCodigoAplicacion(nombre):
     ultimaLetra = len(nombre)-1
@@ -214,13 +220,21 @@ def funcionBotonBuscar():
         nombre = separarNombre(frase)
         frase = obtenerFrase(frase, nombre)
 
+
+
         if not verificarFrase(id):
             generarMatriz(id, frase, nombre)
+        else:
+            print("personaje: "+ nombre + " frase repetida " + frase)
+
+        generarDiccionario(nombre)
+    print(dicc)
+
 
     mostrarFrases()
-    diccPersonajes = generarDiccionario(listaMatriz)
 
-    personaje = obtenerPersonajeMasFrases(diccPersonajes, listaMatriz, mayorCantidadFrases)
+
+    personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
     lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
 
 
