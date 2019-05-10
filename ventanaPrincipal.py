@@ -155,11 +155,13 @@ def separarNombre(frase):
 def mostrarFrases():
     listbox_Frases.config(state="normal")
     listbox_Frases.delete(0, END) #Refrescar
-    contador = len(listaMatriz)
+    contador = 0
     for personaje in listaMatriz:
         for frase in personaje[1]:
+            contador += 1
             listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
                                   + personaje[0] + "\n")
+            contador += 1
             listbox_Frases.insert(contador, "\n")
 
 
@@ -200,9 +202,9 @@ def funcionBotonBuscar():
         cantidad = int(cantidad)
 
         if cantidad > 50:
-            return popupmsg("Error")
+            return popupmsg("La cantidad de frases debe ser menor o igual a 50.")
     except:
-        return ""
+        return popupmsg("La cantidad debe ser un número entero.")
 
     for cant in range(cantidad):
 
@@ -214,19 +216,15 @@ def funcionBotonBuscar():
         nombre = separarNombre(frase)
         frase = obtenerFrase(frase, nombre)
 
-
-
         if not verificarFrase(id):
             generarMatriz(id, frase, nombre)
         else:
-            print("personaje: "+ nombre + " frase repetida " + frase)
+            print("personaje: " + nombre + " frase repetida " + frase)
 
         generarDiccionario(nombre)
+
     print(dicc)
-
-
     mostrarFrases()
-
 
     personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
     lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
@@ -254,39 +252,44 @@ frame = Frame()
 frame.pack()
 frame.config(width=800, height=600)
 
-# Creación del título
+# Creación label del título
 lbl_Titulo = Label(frame, text="Frases de Star Wars")
 lbl_Titulo.grid(row=0, column=0, padx=10, pady=10, sticky="n")
 lbl_Titulo.config(font="Helvetica")
 
-# Creación text area
-
+# Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
 listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
 listbox_Frases.config(state="disabled")
 
+#Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
 scrollVertical.grid(row=1, column=1, sticky='nsew')
 listbox_Frases['yscrollcommand'] = scrollVertical.set
 
+#Creación scroll bar horizontal del listbox
 scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL, command=listbox_Frases.xview)
 scrollHorizontal.grid(row=2, column=0, sticky='nsew')
 listbox_Frases['xscrollcommand'] = scrollHorizontal.set
 
-# Creación widgets
-
+#Creación Entry buscar
 txt_Buscar = Entry(frame)  # x=681
 txt_Buscar.grid(row=1, column=3, padx=10, pady=10, sticky="n")
 txt_Buscar.config(justify="center")
 
+
+#Creación botón share
 btn_Share = Button(frame, text="Share", command=funcionBotonShare, width=36, height=1)
 btn_Share.place(x=681, y=100)
 btn_Share.config(font="Helvetica")
 
+#Creación label apariciones
 lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
 lbl_Apariciones.place(x=681, y=425)
 lbl_Apariciones.config(font="Helvetica")
 
+
+#Creación botón buscar
 btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, height=1)
 btn_Buscar.grid(row=1, column=2, sticky="n", padx=10, pady=10)
 btn_Buscar.config(font="Helvetica")
