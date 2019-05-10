@@ -67,7 +67,7 @@ def lee(nomArchLeer):
 
 def obtenerNombreArchivo():
 
-    fecha = time.strftime("%d-%m-%Y-%I-%M-%S")
+    fecha = time.strftime("%d-%m-%Y-%H-%M-%S")
     fecha = fecha + ".xml"
     return fecha
 
@@ -153,23 +153,17 @@ def separarNombre(frase):
     return "Error"
 
 def mostrarFrases():
-    txt_Area.config(state="normal")
-    txt_Area.delete('1.0', END)
-
+    listbox_Frases.config(state="normal")
+    listbox_Frases.delete(0, END) #Refrescar
+    contador = len(listaMatriz)
     for personaje in listaMatriz:
-        if len(personaje[1]) == 1:
-            frase = personaje[1][0]
-            txt_Area.insert(INSERT, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
-                            + personaje[0] + "\n")
-            txt_Area.insert(INSERT, "\n")
-        else:
-            for frase in personaje[1]:
-                txt_Area.insert(INSERT, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
-                                + personaje[0] + "\n")
-                txt_Area.insert(INSERT, "\n")
+        for frase in personaje[1]:
+            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
+                                  + personaje[0] + "\n")
+            listbox_Frases.insert(contador, "\n")
 
 
-    txt_Area.config(state="disabled")
+    listbox_Frases.config(state="disabled")
 
 def generarCodigoContador(num):
 
@@ -267,30 +261,30 @@ lbl_Titulo.config(font="Helvetica")
 
 # Creación text area
 
-txt_Area = Text(frame, wrap=NONE)
-txt_Area.grid(row=1, column=0, padx=10, pady=10)
-txt_Area.config(state="disabled")
+listbox_Frases = Listbox(frame, height=25, width=105)
+listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
+listbox_Frases.config(state="disabled")
 
-scrollVertical = Scrollbar(frame, orient=VERTICAL, command=txt_Area.yview)
+scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
 scrollVertical.grid(row=1, column=1, sticky='nsew')
-txt_Area['yscrollcommand'] = scrollVertical.set
+listbox_Frases['yscrollcommand'] = scrollVertical.set
 
-scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL, command=txt_Area.xview)
+scrollHorizontal = Scrollbar(frame, orient=HORIZONTAL, command=listbox_Frases.xview)
 scrollHorizontal.grid(row=2, column=0, sticky='nsew')
-txt_Area['xscrollcommand'] = scrollHorizontal.set
+listbox_Frases['xscrollcommand'] = scrollHorizontal.set
 
 # Creación widgets
 
-txt_Buscar = Entry(frame)  # x=691
+txt_Buscar = Entry(frame)  # x=681
 txt_Buscar.grid(row=1, column=3, padx=10, pady=10, sticky="n")
 txt_Buscar.config(justify="center")
 
 btn_Share = Button(frame, text="Share", command=funcionBotonShare, width=36, height=1)
-btn_Share.place(x=691, y=100)
+btn_Share.place(x=681, y=100)
 btn_Share.config(font="Helvetica")
 
 lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
-lbl_Apariciones.place(x=691, y=425)
+lbl_Apariciones.place(x=681, y=425)
 lbl_Apariciones.config(font="Helvetica")
 
 btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, height=1)
