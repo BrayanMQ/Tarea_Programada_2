@@ -6,7 +6,6 @@
 # Importación de funciones
 
 from socket import gethostbyname, create_connection, error
-
 import pickle
 from json import *
 from requests import *
@@ -14,7 +13,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 import time
-
+from xml.etree import ElementTree
 
 #Variables globales
 archivoBackUp = "BackUp.xml"
@@ -33,16 +32,16 @@ def comprobarConexion():
     except error:
         return False
 
-def graba(nomArchGrabar, lista):
+def graba(nomArchGrabar, raiz):
     """
     Función: Graba el nombre del archivo.
-    Entradas: nomArchGrabar(str) Nombre que se le pondrá al archivo, lista(list) Lista que se guardará
+    Entradas: nomArchGrabar(str) Nombre que se le pondrá al archivo, raiz()
     Salidas: NA
     """
     try:
-        f = open(nomArchGrabar, "wb")
-        pickle.dump(lista, f)
-        f.close()
+        archivo = open(nomArchGrabar, 'a')
+        archivo.write(ElementTree.tostring(raiz, encoding='utf-8').decode('utf-8'))
+        archivo.close()
     except:
         print("\nError al grabar el archivo: \n", nomArchGrabar)
 
@@ -164,7 +163,6 @@ def mostrarFrases():
             contador += 1
             listbox_Frases.insert(contador, "\n")
 
-
     listbox_Frases.config(state="disabled")
 
 def generarCodigoContador(num):
@@ -201,8 +199,8 @@ def funcionBotonBuscar():
     try:
         cantidad = int(cantidad)
 
-        if cantidad > 50:
-            return popupmsg("La cantidad de frases debe ser menor o igual a 50.")
+        if cantidad > 50 or cantidad < 1:
+            return popupmsg("La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
     except:
         return popupmsg("La cantidad debe ser un número entero.")
 
@@ -215,7 +213,6 @@ def funcionBotonBuscar():
         frase = json_body["starWarsQuote"]
         nombre = separarNombre(frase)
         frase = obtenerFrase(frase, nombre)
-
         if not verificarFrase(id):
             generarMatriz(id, frase, nombre)
         else:
@@ -232,12 +229,36 @@ def funcionBotonBuscar():
 
 def funcionBotonShare():
     if comprobarConexion():
-        enviarCorreo()
+        generarXML()
     else:
         popupmsg("No hay conexión a Internet.")
 
 def enviarCorreo():
     print("")
+
+def generarXML():
+    raiz = ElementTree.Element('personajes')
+    for personajeMatriz in listaMatriz:
+
+        # Crear estructura del XML
+        personaje = ElementTree.SubElement(raiz, 'personaje')
+        autor = ElementTree.SubElement(personaje, 'autor')
+
+        for frasePersonaje in personajeMatriz[1]:
+            for id in personajeMatriz[2]:
+                frase = ElementTree.SubElement(personaje, 'frase')
+                texto = ElementTree.SubElement(frase, 'texto')
+                idFrase = ElementTree.SubElement(frase, 'id')
+
+                texto.text = frasePersonaje
+                idFrase.text = str(id)
+
+        codigo = ElementTree.SubElement(personaje, 'codigo')
+
+        autor.text = personajeMatriz[0]
+        codigo.text = personajeMatriz[3]
+
+    graba("backUp.xml", raiz)
 
 # Creación de la ventana
 root = Tk()
