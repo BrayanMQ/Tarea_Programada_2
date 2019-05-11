@@ -16,7 +16,7 @@ import time
 from xml.etree import ElementTree
 
 #Variables globales
-archivoBackUp = "BackUp.xml"
+archivoBackUp = "backUp.xml"
 listaMatriz = []
 dicc = {}
 mayorCantidadFrases = 0
@@ -39,7 +39,7 @@ def graba(nomArchGrabar, raiz):
     Salidas: NA
     """
     try:
-        archivo = open(nomArchGrabar, 'a')
+        archivo = open(nomArchGrabar, 'wt')
         archivo.write(ElementTree.tostring(raiz, encoding='utf-8').decode('utf-8'))
         archivo.close()
     except:
@@ -147,6 +147,8 @@ def separarNombre(frase):
                 nombre = "K-2SO"
             elif nombre == "Riyo Chuchi (Season One, Episode 15, Trespass)":
                 nombre = "Riyo Chuchi"
+            elif nombre == "Padmé Amidala":
+                nombre = "Padme Amidala"
 
             return nombre
     return "Error"
@@ -163,7 +165,7 @@ def mostrarFrases():
             contador += 1
             listbox_Frases.insert(contador, "\n")
 
-    listbox_Frases.config(state="disabled")
+    #listbox_Frases.config(state="disabled")
 
 def generarCodigoContador(num):
 
@@ -243,16 +245,16 @@ def generarXML():
         # Crear estructura del XML
         personaje = ElementTree.SubElement(raiz, 'personaje')
         autor = ElementTree.SubElement(personaje, 'autor')
-
+        contador = 0
         for frasePersonaje in personajeMatriz[1]:
-            for id in personajeMatriz[2]:
+
                 frase = ElementTree.SubElement(personaje, 'frase')
                 texto = ElementTree.SubElement(frase, 'texto')
                 idFrase = ElementTree.SubElement(frase, 'id')
 
                 texto.text = frasePersonaje
-                idFrase.text = str(id)
-
+                idFrase.text = str(personajeMatriz[2][contador])
+                contador += 1
         codigo = ElementTree.SubElement(personaje, 'codigo')
 
         autor.text = personajeMatriz[0]
@@ -281,7 +283,7 @@ lbl_Titulo.config(font="Helvetica")
 # Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
 listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
-listbox_Frases.config(state="disabled")
+#listbox_Frases.config(state="disabled")
 
 #Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
