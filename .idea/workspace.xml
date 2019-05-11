@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/ventanaPrincipal.py" line="170" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/ventanaPrincipal.py" line="194" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="161" lean-forward="true" selection-start-line="161" selection-end-line="161" />
+            <state relative-caret-position="166">
+              <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
               <folding>
                 <element signature="e#196#254#0" expanded="true" />
               </folding>
@@ -29,19 +29,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backUp.xml">
+        <entry file="file://C:/Program Files (x86)/Python37-32/Lib/xml/etree/ElementTree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7017" selection-start-column="7016" selection-end-column="7017" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../test/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="16" column="15" lean-forward="true" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+            <state relative-caret-position="108">
+              <caret line="561" selection-start-line="561" selection-end-line="561" />
             </state>
           </provider>
         </entry>
@@ -70,12 +61,15 @@
       <find>graba</find>
       <find>xml</find>
       <find>gener</find>
-      <find>disa</find>
       <find>matri</find>
       <find>50</find>
       <find>-</find>
       <find>obtener</find>
       <find>�</find>
+      <find>separa</find>
+      <find>generarmat</find>
+      <find>disa</find>
+      <find>busca</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -245,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557544606713</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Leer xml &quot;casi&quot;">
+      <created>1557548899236</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1557548899236</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -261,13 +262,13 @@
     <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1748879" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1748879" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49850523" visible="true" weight="0.24798712" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39774558" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49850523" weight="0.24798712" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39774558" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49947312" weight="0.32850242" />
@@ -334,7 +335,8 @@
     <MESSAGE value="Se muestra en el text_Area la matriz principal" />
     <MESSAGE value="El personaje y la frase ya los tira bien, y ya genera el código de aplicación para cada personaje" />
     <MESSAGE value="graba wt" />
-    <option name="LAST_COMMIT_MESSAGE" value="graba wt" />
+    <MESSAGE value="Leer xml &quot;casi&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Leer xml &quot;casi&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -343,6 +345,21 @@
           <url>file://$PROJECT_DIR$/../../test/main.py</url>
           <line>8</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>67</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>57</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -408,14 +425,21 @@
     <entry file="file://$PROJECT_DIR$/backUp.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="7017" selection-start-column="7016" selection-end-column="7017" />
+          <caret column="7333" selection-start-column="7333" selection-end-column="7333" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python37-32/Lib/xml/etree/ElementTree.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="561" selection-start-line="561" selection-end-line="561" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="161" lean-forward="true" selection-start-line="161" selection-end-line="161" />
+        <state relative-caret-position="166">
+          <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
           <folding>
             <element signature="e#196#254#0" expanded="true" />
           </folding>

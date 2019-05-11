@@ -20,23 +20,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-#Variables globales
-archivoBackUp = "backUp.xml"
-listaMatriz = []
-dicc = {}
-mayorCantidadFrases = 0
-
-# Definición de fuciones
-
-def comprobarConexion():
-    try:
-        gethostbyname("google.com")
-        conexion = create_connection(("google.com", 80), 1)
-        conexion.close()
-        return True
-    except error:
-        return False
-
+# Definicion de funciones Leer y Grabar
 def graba(nomArchGrabar, raiz):
     """
     Función: Graba el nombre del archivo.
@@ -59,14 +43,53 @@ def lee(nomArchLeer):
     """
     lista = []
     try:
-        f = open(nomArchLeer, "rb")
-        lista = pickle.load(f)
-        f.close()
+        tree = ElementTree.parse(nomArchLeer)
+        root = tree.getroot()
+        for personaje in root:
+            autor = personaje.find("autor").text
+            codigoApp = personaje.find("codigo").text
+            for frases in personaje:
+                frase = frases.find("frase").text
+                idFrase = frases.find("id").text
+                generarMatriz(idFrase, frase, autor, codigoApp)
+                #generarDiccionario(autor)
+
+        #print(dicc)
+        mostrarFrases()
+
+        personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
+        lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+        print(autor, codigoApp, )
+        return lista
     except:
-        print(
-            "\nError al leer el archivo: " + nomArchLeer + ". Cuando se guarde una nueva persona, el archivo se creará"
-                                                           " automáticamente.")
-    return lista
+        return lista
+
+#Variables globales
+archivoBackUp = "backUp.xml"
+listaMatriz = lee(archivoBackUp)
+dicc = {}
+mayorCantidadFrases = 0
+
+# Definición de fuciones
+
+def cargarBackUp(root):
+    print("hola")
+    for personaje in root:
+        autor = personaje.find("autor")
+        print(autor)
+    return ""
+
+def comprobarConexion():
+    try:
+        gethostbyname("google.com")
+        conexion = create_connection(("google.com", 80), 1)
+        conexion.close()
+        return True
+    except error:
+        return False
+
+
+
 
 
 def obtenerNombreArchivo():
@@ -110,7 +133,7 @@ def generarCodigoAplicacion(nombre):
     codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
     return codigo
 
-def generarMatriz(id, frase, nombre):
+def generarMatriz(id, frase, nombre, codigoAplicacion=""):
 
     for fila in listaMatriz:
         if fila[0] == nombre:
@@ -122,7 +145,8 @@ def generarMatriz(id, frase, nombre):
     nuevoPersonaje.append(nombre)
     nuevoPersonaje.append([frase])
     nuevoPersonaje.append([id])
-    codigoAplicacion = generarCodigoAplicacion(nombre)
+    if codigoAplicacion == "":
+        codigoAplicacion = generarCodigoAplicacion(nombre)
     nuevoPersonaje.append(codigoAplicacion)
 
 
@@ -392,3 +416,4 @@ btn_Buscar.config(font="Helvetica")
 
 # Programa principal
 root.mainloop()
+
