@@ -154,6 +154,8 @@ def separarNombre(frase):
                 nombre = "Riyo Chuchi"
             elif nombre == "Padmé Amidala":
                 nombre = "Padme Amidala"
+            elif nombre == "Chirrut Îmwe":
+                nombre = "Chirrut Imwe"
 
             return nombre
     return "Error"
@@ -170,7 +172,7 @@ def mostrarFrases():
             contador += 1
             listbox_Frases.insert(contador, "\n")
 
-    listbox_Frases.config(state="disabled")
+    #listbox_Frases.config(state="disabled")
 
 def generarCodigoContador(num):
 
@@ -189,7 +191,18 @@ def obtenerFrase(frase, nombre):
     else:
         frase = frase[:(len(frase) - len(nombre)) - 38]
 
-    return frase
+
+    fraseFinal = ""
+    for caracter in frase:
+        if caracter == "’":
+            caracter = "'"
+        elif caracter == "…":
+            caracter = "..."
+        elif caracter == "—":
+            caracter = "-"
+        fraseFinal += caracter
+
+    return fraseFinal
 
 def popupmsg(msg):
     popup = tk.Tk()
@@ -202,7 +215,7 @@ def popupmsg(msg):
 
 def funcionBotonBuscar():
     cantidad = txt_Buscar.get()
-
+    """
     try:
         cantidad = int(cantidad)
 
@@ -210,7 +223,8 @@ def funcionBotonBuscar():
             return popupmsg("La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
     except:
         return popupmsg("La cantidad debe ser un número entero.")
-
+    """
+    cantidad = int(cantidad)
     for cant in range(cantidad):
 
         r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
@@ -342,7 +356,7 @@ lbl_Titulo.config(font="Helvetica")
 # Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
 listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
-listbox_Frases.config(state="disabled")
+#listbox_Frases.config(state="disabled")
 
 #Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
