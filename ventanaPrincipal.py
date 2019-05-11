@@ -4,23 +4,44 @@
 # Versión: 3.7.2
 
 # Importación de funciones
-
 from socket import gethostbyname, create_connection, error
-import pickle
-from json import *
-from requests import *
-from tkinter import *
-import tkinter as tk
-from tkinter import ttk
-import time
-from xml.etree import ElementTree
-import smtplib
+from tkinter.messagebox import showinfo, showerror
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
+from xml.etree import ElementTree
 from email import encoders
+from tkinter import ttk
+from requests import *
+from tkinter import *
+import tkinter as tk
+import smtplib
+import time
+#Variables globales
+archivoBackUp = "backUp.xml"
+dicc = {}
+mayorCantidadFrases = 0
+listaMatriz = []
 
-# Definicion de funciones Leer y Grabar
+# Definición de fuciones
+def cargarBackUp(raiz):
+    for personaje in raiz:
+        autor = personaje.find("autor").text
+        codigoApp = personaje.find("codigo").text
+        for frases in personaje.findall("frase"):
+            frase = frases.find("texto").text
+            idFrase = frases.find("id").text
+            generarMatriz(idFrase, frase, autor, codigoApp)
+            generarDiccionario(autor)
+
+    print(dicc)
+    mostrarFrases()
+
+    personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
+    lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+    return ""
+
+
 def graba(nomArchGrabar, raiz):
     """
     Función: Graba el nombre del archivo.
@@ -34,7 +55,6 @@ def graba(nomArchGrabar, raiz):
     except:
         print("\nError al grabar el archivo: \n", nomArchGrabar)
 
-
 def lee(nomArchLeer):
     """
     Función: Lee el archivo "canciones"
@@ -44,40 +64,41 @@ def lee(nomArchLeer):
     lista = []
     try:
         tree = ElementTree.parse(nomArchLeer)
-        root = tree.getroot()
-        for personaje in root:
-            autor = personaje.find("autor").text
-            codigoApp = personaje.find("codigo").text
-            for frases in personaje:
-                frase = frases.find("frase").text
-                idFrase = frases.find("id").text
-                generarMatriz(idFrase, frase, autor, codigoApp)
-                #generarDiccionario(autor)
-
-        #print(dicc)
-        mostrarFrases()
-
-        personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
-        lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
-        print(autor, codigoApp, )
+        raiz = tree.getroot()
+        cargarBackUp(raiz)
+        showinfo("Back up", "Se cargó con éxito el back up.")
         return lista
     except:
+        showinfo("Back up", "No se ha encontrado un archivo back up.")
         return lista
 
-#Variables globales
-archivoBackUp = "backUp.xml"
-listaMatriz = lee(archivoBackUp)
-dicc = {}
-mayorCantidadFrases = 0
+def mostrarFrases():
+    listbox_Frases.config(state="normal")
+    listbox_Frases.delete(0, END) #Refrescar
+    contador = 0
+    for personaje in listaMatriz:
+        for frase in personaje[1]:
+            contador += 1
+            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
+                                  + personaje[0] + "\n")
+            contador += 1
+            listbox_Frases.insert(contador, "\n")
+    #listbox_Frases.config(state="disabled")
 
-# Definición de fuciones
 
-def cargarBackUp(root):
-    print("hola")
-    for personaje in root:
-        autor = personaje.find("autor")
-        print(autor)
-    return ""
+def mostrarFrases():
+    listbox_Frases.config(state="normal")
+    listbox_Frases.delete(0, END) #Refrescar
+    contador = 0
+    for personaje in listaMatriz:
+        for frase in personaje[1]:
+            contador += 1
+            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
+                                  + personaje[0] + "\n")
+            contador += 1
+            listbox_Frases.insert(contador, "\n")
+    #listbox_Frases.config(state="disabled")
+
 
 def comprobarConexion():
     try:
@@ -89,14 +110,12 @@ def comprobarConexion():
         return False
 
 
+def generarNombreArchivo():
 
+    nombreArchivo = time.strftime("%d-%m-%Y-%H-%M-%S")
+    nombreArchivo = nombreArchivo + ".xml"
+    return nombreArchivo
 
-
-def obtenerNombreArchivo():
-
-    fecha = time.strftime("%d-%m-%Y-%H-%M-%S")
-    fecha = fecha + ".xml"
-    return fecha
 
 def obtenerPersonajeMasFrases(pMayorCantidadFrases):
     codigosPersonaje = list(dicc.keys())
@@ -125,7 +144,16 @@ def generarDiccionario(nombre):
             #print(dicc)
             return dicc
 
+def generarCodigoContador(num):
 
+    if num <= 9:
+        codigo = "00" + str(num)
+    elif num <= 99:
+        codigo = "0" + str(num)
+    elif num >= 100:
+        codigo = str(num)
+
+    return codigo
 
 def generarCodigoAplicacion(nombre):
     ultimaLetra = len(nombre)-1
@@ -133,33 +161,11 @@ def generarCodigoAplicacion(nombre):
     codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
     return codigo
 
-def generarMatriz(id, frase, nombre, codigoAplicacion=""):
-
-    for fila in listaMatriz:
-        if fila[0] == nombre:
-            fila[1].append(frase)
-            fila[2].append(id)
-            return ""
-
-    nuevoPersonaje = []
-    nuevoPersonaje.append(nombre)
-    nuevoPersonaje.append([frase])
-    nuevoPersonaje.append([id])
-    if codigoAplicacion == "":
-        codigoAplicacion = generarCodigoAplicacion(nombre)
-    nuevoPersonaje.append(codigoAplicacion)
-
-
-
-    listaMatriz.append(nuevoPersonaje)
-
-
 def verificarFrase(id):
     for fila in listaMatriz:
         if id in fila[2]:
             return True
     return False
-
 
 def separarNombre(frase):
     largo = len(frase) - 1
@@ -184,37 +190,29 @@ def separarNombre(frase):
             return nombre
     return "Error"
 
-def mostrarFrases():
-    listbox_Frases.config(state="normal")
-    listbox_Frases.delete(0, END) #Refrescar
-    contador = 0
-    for personaje in listaMatriz:
-        for frase in personaje[1]:
-            contador += 1
-            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
-                                  + personaje[0] + "\n")
-            contador += 1
-            listbox_Frases.insert(contador, "\n")
+def generarMatriz(id, frase, nombre, codigoAplicacion=""):
+    for fila in listaMatriz:
+        if fila[0] == nombre:
+            fila[1].append(frase)
+            fila[2].append(id)
+            return ""
 
-    #listbox_Frases.config(state="disabled")
+    nuevoPersonaje = []
+    nuevoPersonaje.append(nombre)
+    nuevoPersonaje.append([frase])
+    nuevoPersonaje.append([id])
+    if codigoAplicacion == "":
+        codigoAplicacion = generarCodigoAplicacion(nombre)
+    nuevoPersonaje.append(codigoAplicacion)
 
-def generarCodigoContador(num):
-
-    if num <= 9:
-        codigo = "00" + str(num)
-    elif num <= 99:
-        codigo = "0" + str(num)
-    elif num >= 100:
-        codigo = str(num)
-
-    return codigo
+    # Agrega toda la información del personaje a la matriz
+    listaMatriz.append(nuevoPersonaje)
 
 def obtenerFrase(frase, nombre):
     if not nombre == "Riyo Chuchi": #Es la excepción porque incluye el episodio
         frase = frase[:(len(frase) - len(nombre)) - 3]
     else:
         frase = frase[:(len(frase) - len(nombre)) - 38]
-
 
     fraseFinal = ""
     for caracter in frase:
@@ -228,75 +226,51 @@ def obtenerFrase(frase, nombre):
 
     return fraseFinal
 
-def popupmsg(msg):
-    popup = tk.Tk()
-    popup.wm_title("!")
-    label = ttk.Label(popup, text=msg, font="Helvetica")
-    label.pack(side="top", fill="x", pady=10)
-    B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
-    B1.pack()
-    popup.mainloop()
+def generarXML():
+    raiz = ElementTree.Element('personajes')
+    for personajeMatriz in listaMatriz:
 
-def funcionBotonBuscar():
-    cantidad = txt_Buscar.get()
-    """
-    try:
-        cantidad = int(cantidad)
+        # Crear estructura del XML
+        personaje = ElementTree.SubElement(raiz, 'personaje')
+        autor = ElementTree.SubElement(personaje, 'autor')
+        contador = 0
+        for frasePersonaje in personajeMatriz[1]:
 
-        if cantidad > 50 or cantidad < 1:
-            return popupmsg("La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
-    except:
-        return popupmsg("La cantidad debe ser un número entero.")
-    """
-    cantidad = int(cantidad)
-    for cant in range(cantidad):
+                frase = ElementTree.SubElement(personaje, 'frase')
+                texto = ElementTree.SubElement(frase, 'texto')
+                idFrase = ElementTree.SubElement(frase, 'id')
 
-        r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
-        json_body = r.json()
+                texto.text = frasePersonaje
+                idFrase.text = str(personajeMatriz[2][contador])
+                contador += 1
+        codigo = ElementTree.SubElement(personaje, 'codigo')
 
-        id = json_body["id"]
-        frase = json_body["starWarsQuote"]
-        nombre = separarNombre(frase)
-        frase = obtenerFrase(frase, nombre)
-        if not verificarFrase(id):
-            generarMatriz(id, frase, nombre)
-        else:
-            print("personaje: " + nombre + " frase repetida " + frase)
+        autor.text = personajeMatriz[0]
+        codigo.text = personajeMatriz[3]
 
-        generarDiccionario(nombre)
+    graba(archivoBackUp, raiz)
 
-    print(dicc)
-    mostrarFrases()
-
-    personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
-    lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
-
-
-def funcionBotonShare():
-    if comprobarConexion():
-        generarXML()
-    else:
-        popupmsg("No hay conexión a Internet.")
-
-def enviarCorreo():
+def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo, nombreArchivo):
     # Iniciamos los parámetros del script
-    remitente = ""
-    destinatarios = [""]
-    asunto = ""
-    cuerpo = ""
-    ruta_adjunto = ""  # Lugar donde se encuentra el archivo
-    nombre_adjunto = ""  # Nombre del archivo que se enviará
-    contrasenna = ""
+    remitente = remitente
+    destinatarios = destinatarios
+    asunto = asunto
+    cuerpo = cuerpo
+    ruta_adjunto = "backUp.xml"  # Lugar donde se encuentra el archivo
+    nombre_adjunto = "backUp.xml"  # Nombre del archivo que se enviará
+    contrasenna = contrasenna
 
     # Creamos el objeto mensaje
     mensaje = MIMEMultipart()
 
     # Establecemos los atributos del mensaje
     mensaje['From'] = remitente
-    if len(destinatarios) == 1:
-        mensaje['To'] = "".join(destinatarios)
-    else:
-        mensaje['To'] = ", ".join(destinatarios)
+    #if len(destinatarios) == 1:
+     #   mensaje['To'] = "".join(destinatarios)
+    #else:
+     #   mensaje['To'] = ", ".join(destinatarios)
+
+    mensaje['To'] = destinatarios
 
     mensaje['Subject'] = asunto
 
@@ -324,40 +298,173 @@ def enviarCorreo():
     sesion_smtp.starttls()
 
     # Iniciamos sesión en el servidor
-    sesion_smtp.login(remitente, contrasenna)
-
+    try:
+        sesion_smtp.login(remitente, contrasenna)
+    except:
+        showerror("Error", "No se pudo iniciar sesión.")
+        return ""
     # Convertimos el objeto mensaje a texto
     texto = mensaje.as_string()
 
     # Enviamos el mensaje
-    sesion_smtp.sendmail(remitente, destinatarios, texto)
+    try:
+        sesion_smtp.sendmail(remitente, destinatarios, texto)
+        showinfo("Éxito", "Se ha enviado el correo con éxito")
+    except:
+        showerror("Error", "No se pudo enviar el mensaje.")
 
     # Cerramos la conexión
     sesion_smtp.quit()
 
-def generarXML():
-    raiz = ElementTree.Element('personajes')
-    for personajeMatriz in listaMatriz:
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("Información")
+    label = ttk.Label(popup, text=msg, font="Helvetica")
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
-        # Crear estructura del XML
-        personaje = ElementTree.SubElement(raiz, 'personaje')
-        autor = ElementTree.SubElement(personaje, 'autor')
-        contador = 0
-        for frasePersonaje in personajeMatriz[1]:
+def pantallaNuevoCorreo(correo, contrasenna):
 
-                frase = ElementTree.SubElement(personaje, 'frase')
-                texto = ElementTree.SubElement(frase, 'texto')
-                idFrase = ElementTree.SubElement(frase, 'id')
+    ventanaCorreoNuevo = Toplevel()
+    ventanaCorreoNuevo.title("Correo nuevo")
+    ventanaCorreoNuevo.geometry("400x400+750+300")
+    ventanaCorreoNuevo.resizable(0, 0)
+    ventanaCorreoNuevo.iconbitmap("imagenes/candado.ico")
 
-                texto.text = frasePersonaje
-                idFrase.text = str(personajeMatriz[2][contador])
-                contador += 1
-        codigo = ElementTree.SubElement(personaje, 'codigo')
+    et = StringVar()
+    es = StringVar()
+    Label(ventanaCorreoNuevo, text="De: %s" % correo).grid(row=0, column=0, sticky=NSEW)
 
-        autor.text = personajeMatriz[0]
-        codigo.text = personajeMatriz[3]
+    Label(ventanaCorreoNuevo, text="Para:").grid(row=1, column=0, padx=10, pady=10, sticky=W)
+    txt_Para = Entry(ventanaCorreoNuevo, textvariable=et, width=25)
+    txt_Para.grid(row=1, column=1, padx=10, pady=10, sticky=E)
 
-    graba(archivoBackUp, raiz)
+    Label(ventanaCorreoNuevo, text="Asunto:").grid(row=2, column=0, sticky=W)
+    txt_Asunto = Entry(ventanaCorreoNuevo, textvariable=es, width=25)
+    txt_Asunto.grid(row=2, column=1, padx=10, pady=10, sticky=E)
+
+    Label(ventanaCorreoNuevo, text="Mensaje:").grid(row=3, column=0, sticky=W)
+    txt_Mensaje = Text(ventanaCorreoNuevo, width=25, height=5)
+    txt_Mensaje.grid(row=3, column=1, padx=10, pady=10, sticky=E)
+
+    def enviar():
+        enviarCorreo(correo, contrasenna,
+                     destinatarios=txt_Para.get(),
+                     asunto=txt_Asunto.get(),
+                     cuerpo=txt_Mensaje.get("1.0", "end-1c"),
+                     nombreArchivo=generarNombreArchivo())
+        return ""
+
+    btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
+    btn_Enviar.grid(row=4, column=0, sticky=NSEW)
+
+    salir = Button(ventanaCorreoNuevo, text="Salir", command=ventanaCorreoNuevo.quit)
+    salir.grid(row=4, column=1, sticky=NSEW)
+
+def pantallaLogin():
+
+    ventanaIniciarSesion = Toplevel(root)
+    ventanaIniciarSesion.title("Iniciar sesión")
+    ventanaIniciarSesion.geometry("300x250+750+300")
+    ventanaIniciarSesion.resizable(0, 0)
+    ventanaIniciarSesion.iconbitmap("imagenes/candado.ico")
+
+    Label(ventanaIniciarSesion, text="Por favor ingrese sus datos para iniciar sesión.").pack()
+    Label(ventanaIniciarSesion, text="").pack()
+
+    username_verify = StringVar()
+    password_verify = StringVar()
+
+    Label(ventanaIniciarSesion, text="Usuario").pack()
+
+    txt_Usuario = Entry(ventanaIniciarSesion, textvariable=username_verify)
+    txt_Usuario.pack()
+
+    Label(ventanaIniciarSesion, text="").pack()
+    Label(ventanaIniciarSesion, text="Contraseña").pack()
+
+    txt_Contrasenna = Entry(ventanaIniciarSesion, textvariable=password_verify, show='*')
+    txt_Contrasenna.pack()
+
+    Label(ventanaIniciarSesion, text="").pack()
+
+    def funcionBotonIniciarSesion():
+        correo = txt_Usuario.get().lower()
+        contrasenna = txt_Contrasenna.get()
+
+        #Comprobar que los espacios estén llenos
+        if correo == "":
+            showerror("Error", "El espacio correo no puede estar vacío.")
+            return pantallaLogin()
+        elif contrasenna == "":
+            showerror("Error", "La espacio contraseña no puede estar vacío.")
+            return pantallaLogin()
+
+        # Creamos la conexión con el servidor
+        sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
+
+        # Ciframos la conexión
+        sesion_smtp.starttls()
+
+        # Iniciamos sesión en el servidor
+        try:
+            sesion_smtp.login(correo, contrasenna)
+            showinfo("Éxito", "Se ha iniciado sesión")
+            return pantallaNuevoCorreo(correo, contrasenna)
+        except:
+            showerror("Error", "No se pudo iniciar sesión con la cuenta: " + correo)
+            return pantallaLogin()
+
+    Button(ventanaIniciarSesion, text="Iniciar sesión", width=10, height=1, command=funcionBotonIniciarSesion).pack()
+
+
+def funcionBotonBuscar():
+    cantidad = txt_Buscar.get()
+
+    try:
+
+        cantidad = int(cantidad)
+
+        if cantidad > 50 or cantidad < 1:
+            return showerror("Error", "La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
+
+
+
+    except:
+        return showerror("Error", "La cantidad de frases debe ser un número entero.")
+
+    for cant in range(cantidad):
+
+        r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
+        json_body = r.json()
+
+        id = json_body["id"]
+        frase = json_body["starWarsQuote"]
+        nombre = separarNombre(frase)
+        frase = obtenerFrase(frase, nombre)
+        if not verificarFrase(id):
+            generarMatriz(id, frase, nombre)
+        else:
+            print("personaje: " + nombre + " frase repetida " + frase)
+
+        generarDiccionario(nombre)
+
+    print(dicc)
+    mostrarFrases()
+
+    personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
+    lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+
+
+def funcionBotonShare():
+    if comprobarConexion():
+        generarXML()
+        pantallaLogin()
+    else:
+        popupmsg("No hay conexión a Internet.")
+
 
 # Creación de la ventana
 root = Tk()
@@ -365,6 +472,7 @@ root = Tk()
 # Propiedades de la ventana
 root.title("Ventana principal")
 root.iconbitmap("imagenes/icon.ico")
+root.geometry("+400+200")
 root.resizable(0, 0)
 
 # Creación frame
@@ -408,12 +516,13 @@ lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
 lbl_Apariciones.place(x=681, y=425)
 lbl_Apariciones.config(font="Helvetica")
 
-
 #Creación botón buscar
 btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, height=1)
 btn_Buscar.grid(row=1, column=2, sticky="n", padx=10, pady=10)
 btn_Buscar.config(font="Helvetica")
 
-# Programa principal
+listaMatriz = lee(archivoBackUp)
+
+#Inicio de la ventana
 root.mainloop()
 
