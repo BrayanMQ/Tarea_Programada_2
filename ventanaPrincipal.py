@@ -14,6 +14,11 @@ import tkinter as tk
 from tkinter import ttk
 import time
 from xml.etree import ElementTree
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 #Variables globales
 archivoBackUp = "backUp.xml"
@@ -165,7 +170,7 @@ def mostrarFrases():
             contador += 1
             listbox_Frases.insert(contador, "\n")
 
-    #listbox_Frases.config(state="disabled")
+    listbox_Frases.config(state="disabled")
 
 def generarCodigoContador(num):
 
@@ -236,7 +241,61 @@ def funcionBotonShare():
         popupmsg("No hay conexión a Internet.")
 
 def enviarCorreo():
-    print("")
+    # Iniciamos los parámetros del script
+    remitente = ""
+    destinatarios = [""]
+    asunto = ""
+    cuerpo = ""
+    ruta_adjunto = ""  # Lugar donde se encuentra el archivo
+    nombre_adjunto = ""  # Nombre del archivo que se enviará
+    contrasenna = ""
+
+    # Creamos el objeto mensaje
+    mensaje = MIMEMultipart()
+
+    # Establecemos los atributos del mensaje
+    mensaje['From'] = remitente
+    if len(destinatarios) == 1:
+        mensaje['To'] = "".join(destinatarios)
+    else:
+        mensaje['To'] = ", ".join(destinatarios)
+
+    mensaje['Subject'] = asunto
+
+    # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
+    mensaje.attach(MIMEText(cuerpo, 'plain'))
+
+    # Abrimos el archivo que vamos a adjuntar
+    archivo_adjunto = open(ruta_adjunto, 'rb')
+
+    # Creamos un objeto MIME base
+    adjunto_MIME = MIMEBase('application', 'octet-stream')
+    # Y le cargamos el archivo adjunto
+    adjunto_MIME.set_payload((archivo_adjunto).read())
+    # Codificamos el objeto en BASE64
+    encoders.encode_base64(adjunto_MIME)
+    # Agregamos una cabecera al objeto
+    adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
+    # Y finalmente lo agregamos al mensaje
+    mensaje.attach(adjunto_MIME)
+
+    # Creamos la conexión con el servidor
+    sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
+
+    # Ciframos la conexión
+    sesion_smtp.starttls()
+
+    # Iniciamos sesión en el servidor
+    sesion_smtp.login(remitente, contrasenna)
+
+    # Convertimos el objeto mensaje a texto
+    texto = mensaje.as_string()
+
+    # Enviamos el mensaje
+    sesion_smtp.sendmail(remitente, destinatarios, texto)
+
+    # Cerramos la conexión
+    sesion_smtp.quit()
 
 def generarXML():
     raiz = ElementTree.Element('personajes')
@@ -260,7 +319,7 @@ def generarXML():
         autor.text = personajeMatriz[0]
         codigo.text = personajeMatriz[3]
 
-    graba("backUp.xml", raiz)
+    graba(archivoBackUp, raiz)
 
 # Creación de la ventana
 root = Tk()
@@ -283,7 +342,7 @@ lbl_Titulo.config(font="Helvetica")
 # Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
 listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
-#listbox_Frases.config(state="disabled")
+listbox_Frases.config(state="disabled")
 
 #Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
