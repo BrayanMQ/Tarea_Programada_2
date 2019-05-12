@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="271" column="45" lean-forward="true" selection-start-line="271" selection-start-column="45" selection-end-line="271" selection-end-column="45" />
+            <state relative-caret-position="535">
+              <caret line="370" column="44" selection-start-line="370" selection-start-column="44" selection-end-line="370" selection-end-column="44" />
               <folding>
                 <element signature="e#195#253#0" expanded="true" />
               </folding>
@@ -36,15 +36,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>entr</find>
-      <find>print</find>
-      <find>gene</find>
-      <find>mayor</find>
-      <find>lee</find>
-      <find>back</find>
-      <find>.xml</find>
-      <find>utf</find>
-      <find>generar</find>
       <find>funcio</find>
       <find>graba</find>
       <find>xml</find>
@@ -65,6 +56,16 @@
       <find>funcionBoton</find>
       <find>generarXML</find>
       <find>enviar</find>
+      <find>generar</find>
+      <find>generarxml</find>
+      <find>enviarc</find>
+      <find>enviarC</find>
+      <find>print</find>
+      <find>#</find>
+      <find>generarXml</find>
+      <find>generarDiccio</find>
+      <find>iniciar</find>
+      <find>enviarCorreo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,6 +101,11 @@
             <path>
               <item name="Tarea_Programada_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tarea_Programada_2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tarea_Programada_2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tarea_Programada_2" type="462c0819:PsiDirectoryNode" />
+              <item name="Archivos_correo" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -255,7 +261,21 @@
       <option name="project" value="LOCAL" />
       <updated>1557598623820</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Enviar correos con frases">
+      <created>1557630989391</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1557630989391</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Por fin funciona el envío de correo con frases">
+      <created>1557636286859</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1557636286859</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -365,7 +385,9 @@
     <MESSAGE value="graba wt" />
     <MESSAGE value="Leer xml &quot;casi&quot;" />
     <MESSAGE value="Se lee le backUp correctamente, se agregaron funciones para enviar correos, además de sus respectivas interfaces de logueo y envío de correo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se lee le backUp correctamente, se agregaron funciones para enviar correos, además de sus respectivas interfaces de logueo y envío de correo" />
+    <MESSAGE value="Enviar correos con frases" />
+    <MESSAGE value="Por fin funciona el envío de correo con frases" />
+    <option name="LAST_COMMIT_MESSAGE" value="Por fin funciona el envío de correo con frases" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -377,8 +399,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
-          <line>321</line>
-          <option name="timeStamp" value="39" />
+          <line>266</line>
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -409,24 +431,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="320" selection-start-line="320" selection-end-line="320" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/ttk.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/funciones.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/xml/etree/ElementTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="1196" selection-start-line="1196" selection-end-line="1196" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/enum.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
@@ -469,13 +477,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backUp.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/encodings/idna.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
@@ -504,10 +505,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/_bootlocale.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="194" selection-start-line="194" selection-end-line="194" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/xml/etree/ElementTree.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="556" selection-start-line="556" selection-end-line="556" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backUp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Archivos_correo/11-05-2019-23-31-33.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="486" selection-start-column="450" selection-end-column="486" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="271" column="45" lean-forward="true" selection-start-line="271" selection-start-column="45" selection-end-line="271" selection-end-column="45" />
+        <state relative-caret-position="535">
+          <caret line="370" column="44" selection-start-line="370" selection-start-column="44" selection-end-line="370" selection-end-column="44" />
           <folding>
             <element signature="e#195#253#0" expanded="true" />
           </folding>

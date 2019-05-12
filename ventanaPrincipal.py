@@ -5,7 +5,7 @@
 
 # Importación de funciones
 from socket import gethostbyname, create_connection, error
-from tkinter.messagebox import showinfo, showerror
+from tkinter.messagebox import showinfo, showerror, YESNO
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -39,9 +39,6 @@ def cargarBackUp(raiz):
             frase = frases.find("texto").text
             idFrase = frases.find("id").text
             generarMatriz(idFrase, frase, autor, codigoApp)
-            #generarDiccionario(autor)
-
-    print(dicc)
     mostrarFrases()
 
     personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
@@ -117,7 +114,6 @@ def obtenerPersonajeMasFrases(pMayorCantidadFrases):
                 if codigo == dato[3]:
                     nombrePersonaje = dato[0]
                     break
-    print(nombrePersonaje)
     return nombrePersonaje
 
 def generarDiccionario(nombre):
@@ -130,7 +126,6 @@ def generarDiccionario(nombre):
                 cantidadFrases = 0
             cantidadFrases += 1
             dicc[codigoPersonaje] = cantidadFrases
-            #print(dicc)
             return dicc
 
 def generarCodigoContador(num):
@@ -226,97 +221,102 @@ def obtenerFrase(frase, nombre):
     return fraseFinal
 
 def generarXML(pLista, backUp=False):
-    raiz = ElementTree.Element('personajes')
-    for personajeMatriz in pLista:
-        # Crear estructura del XML
-        personaje = ElementTree.SubElement(raiz, 'personaje')
-        autor = ElementTree.SubElement(personaje, 'autor')
-        contador = 0
 
-        for frasePersonaje in personajeMatriz[1]:
+    if not len(pLista) == 0:
+        raiz = ElementTree.Element('personajes')
+        for personajeMatriz in pLista:
+            # Crear estructura del XML
+            personaje = ElementTree.SubElement(raiz, 'personaje')
+            autor = ElementTree.SubElement(personaje, 'autor')
+            contador = 0
 
-            frase = ElementTree.SubElement(personaje, 'frase')
-            texto = ElementTree.SubElement(frase, 'texto')
-            idFrase = ElementTree.SubElement(frase, 'id')
+            for frasePersonaje in personajeMatriz[1]:
 
-            texto.text = frasePersonaje
-            idFrase.text = str(personajeMatriz[2][contador])
-            contador += 1
-        codigo = ElementTree.SubElement(personaje, 'codigo')
-        cantApariciones = ElementTree.SubElement(personaje, 'cantApariciones')
-        autor.text = personajeMatriz[0]
-        codigo.text = personajeMatriz[3]
-        cantApariciones.text = str(dicc[personajeMatriz[3]])
+                frase = ElementTree.SubElement(personaje, 'frase')
+                texto = ElementTree.SubElement(frase, 'texto')
+                idFrase = ElementTree.SubElement(frase, 'id')
 
-    try:
-        os.mkdir("Archivos_correo")
-    except:
-        if backUp:
-            graba(archivoBackUp, raiz)
-        else:
-            archivoCorreo = generarNombreArchivo()
-            file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
-            archivoCorreo = archivoCorreo[1:]
-            directorio.append(file_Path)
-            directorio.append(archivoCorreo)
-            graba(directorio[0], raiz)
+                texto.text = frasePersonaje
+                idFrase.text = str(personajeMatriz[2][contador])
+                contador += 1
+            codigo = ElementTree.SubElement(personaje, 'codigo')
+            cantApariciones = ElementTree.SubElement(personaje, 'cantApariciones')
+            autor.text = personajeMatriz[0]
+            codigo.text = personajeMatriz[3]
+            cantApariciones.text = str(dicc[personajeMatriz[3]])
+
+            try:
+                os.mkdir("Archivos_correo")
+            except:
+                if backUp:
+                    graba(archivoBackUp, raiz)
+                else:
+                    archivoCorreo = generarNombreArchivo()
+                    file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
+                    archivoCorreo = archivoCorreo[1:]
+                    directorio.append(file_Path)
+                    directorio.append(archivoCorreo)
+                    graba(directorio[0], raiz)
+    else:
+        showinfo("Error", "No hay frases por guardar.")
 
 def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
+    if comprobarConexion():
 
-    # Iniciamos los parámetros del script
-    ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
-    nombre_adjunto = directorio[1]   # Nombre del archivo que se enviará
+        # Iniciamos los parámetros del script
+        ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
+        nombre_adjunto = directorio[1]   # Nombre del archivo que se enviará
 
+        # Creamos el objeto mensaje
+        mensaje = MIMEMultipart()
 
-    # Creamos el objeto mensaje
-    mensaje = MIMEMultipart()
+        # Establecemos los atributos del mensaje
+        mensaje['From'] = remitente
+        mensaje['To'] = destinatarios
+        mensaje['Subject'] = asunto
 
-    # Establecemos los atributos del mensaje
-    mensaje['From'] = remitente
-    mensaje['To'] = destinatarios
-    mensaje['Subject'] = asunto
+        # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
+        mensaje.attach(MIMEText(cuerpo, 'plain'))
 
-    # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
-    mensaje.attach(MIMEText(cuerpo, 'plain'))
+        # Abrimos el archivo que vamos a adjuntar
+        archivo_adjunto = open(ruta_adjunto, 'rb')
 
-    # Abrimos el archivo que vamos a adjuntar
-    archivo_adjunto = open(ruta_adjunto, 'rb')
+        # Creamos un objeto MIME base
+        adjunto_MIME = MIMEBase('application', 'octet-stream')
+        # Y le cargamos el archivo adjunto
+        adjunto_MIME.set_payload(archivo_adjunto.read())
+        # Codificamos el objeto en BASE64
+        encoders.encode_base64(adjunto_MIME)
+        # Agregamos una cabecera al objeto
+        adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
+        # Y finalmente lo agregamos al mensaje
+        mensaje.attach(adjunto_MIME)
 
-    # Creamos un objeto MIME base
-    adjunto_MIME = MIMEBase('application', 'octet-stream')
-    # Y le cargamos el archivo adjunto
-    adjunto_MIME.set_payload(archivo_adjunto.read())
-    # Codificamos el objeto en BASE64
-    encoders.encode_base64(adjunto_MIME)
-    # Agregamos una cabecera al objeto
-    adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
-    # Y finalmente lo agregamos al mensaje
-    mensaje.attach(adjunto_MIME)
+        # Creamos la conexión con el servidor
+        sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
 
-    # Creamos la conexión con el servidor
-    sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        # Ciframos la conexión
+        sesion_smtp.starttls()
 
-    # Ciframos la conexión
-    sesion_smtp.starttls()
+        # Iniciamos sesión en el servidor
+        try:
+            sesion_smtp.login(remitente, contrasenna)
+        except:
+            showerror("Error", "No se pudo iniciar sesión.")
+        # Convertimos el objeto mensaje a texto
+        texto = mensaje.as_string()
 
-    # Iniciamos sesión en el servidor
-    try:
-        sesion_smtp.login(remitente, contrasenna)
-    except:
-        showerror("Error", "No se pudo iniciar sesión.")
-        return ""
-    # Convertimos el objeto mensaje a texto
-    texto = mensaje.as_string()
+        # Enviamos el mensaje
+        try:
+            sesion_smtp.sendmail(remitente, destinatarios, texto)
+            showinfo("Éxito", "Se ha enviado el correo con éxito")
+        except:
+            showerror("Error", "No se pudo enviar el mensaje.")
 
-    # Enviamos el mensaje
-    try:
-        sesion_smtp.sendmail(remitente, destinatarios, texto)
-        showinfo("Éxito", "Se ha enviado el correo con éxito")
-    except:
-        showerror("Error", "No se pudo enviar el mensaje.")
-
-    # Cerramos la conexión
-    sesion_smtp.quit()
+        # Cerramos la conexión
+        sesion_smtp.quit()
+    else:
+        showerror("Error", "No hay conexión a Internet.")
 
 def popupmsg(msg):
     popup = tk.Tk()
@@ -331,38 +331,49 @@ def pantallaNuevoCorreo(correo, contrasenna):
 
     ventanaCorreoNuevo = Toplevel()
     ventanaCorreoNuevo.title("Correo nuevo")
-    ventanaCorreoNuevo.geometry("400x400+750+300")
+    ventanaCorreoNuevo.geometry("475x280+750+300")
     ventanaCorreoNuevo.resizable(0, 0)
     ventanaCorreoNuevo.iconbitmap("imagenes/candado.ico")
 
     et = StringVar()
     es = StringVar()
-    Label(ventanaCorreoNuevo, text="De: %s" % correo).grid(row=0, column=0, sticky=NSEW)
+    Label(ventanaCorreoNuevo, text="De: %s" % correo).grid(row=0, column=0, sticky=W)
 
-    Label(ventanaCorreoNuevo, text="Para:").grid(row=1, column=0, padx=10, pady=10, sticky=W)
+    Label(ventanaCorreoNuevo, text="Para:").grid(row=1, column=0, sticky=W)
     txt_Para = Entry(ventanaCorreoNuevo, textvariable=et, width=25)
-    txt_Para.grid(row=1, column=1, padx=10, pady=10, sticky=E)
+    txt_Para.grid(row=1, column=1, padx=10, pady=10, sticky=W)
 
     Label(ventanaCorreoNuevo, text="Asunto:").grid(row=2, column=0, sticky=W)
     txt_Asunto = Entry(ventanaCorreoNuevo, textvariable=es, width=25)
-    txt_Asunto.grid(row=2, column=1, padx=10, pady=10, sticky=E)
+    txt_Asunto.grid(row=2, column=1, padx=10, pady=10, sticky=W)
 
     Label(ventanaCorreoNuevo, text="Mensaje:").grid(row=3, column=0, sticky=W)
     txt_Mensaje = Text(ventanaCorreoNuevo, width=25, height=5)
-    txt_Mensaje.grid(row=3, column=1, padx=10, pady=10, sticky=E)
+    txt_Mensaje.grid(row=3, column=1, padx=10, pady=10, sticky=W)
+
+    Label(ventanaCorreoNuevo, text="Archivo adjunto: " + directorio[1]).grid(row=4, column=0, sticky=W)
 
     def enviar():
-        enviarCorreo(correo, contrasenna,
-                     destinatarios=txt_Para.get(),
-                     asunto=txt_Asunto.get(),
-                     cuerpo=txt_Mensaje.get("1.0", "end-1c"))
-        return ""
+        if comprobarConexion():
+
+            destinatarios = txt_Para.get()
+
+            if destinatarios == "":
+                showerror("Error", "El destinatario no puede estar vacío.")
+                ventanaCorreoNuevo.destroy()
+                return pantallaNuevoCorreo(correo, contrasenna)
+            else:
+                enviarCorreo(correo, contrasenna,
+                             destinatarios,
+                             asunto=txt_Asunto.get(),
+                             cuerpo=txt_Mensaje.get("1.0", "end-1c"))
+
+                ventanaCorreoNuevo.destroy()
+        else:
+            showerror("Error", "No hay conexión a Internet.")
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
-    btn_Enviar.grid(row=4, column=0, sticky=NSEW)
-
-    salir = Button(ventanaCorreoNuevo, text="Salir", command=ventanaCorreoNuevo.quit)
-    salir.grid(row=4, column=1, sticky=NSEW)
+    btn_Enviar.grid(row=5, column=0, padx=10, pady=10, sticky=NSEW)
 
 def pantallaLogin():
 
@@ -413,6 +424,7 @@ def pantallaLogin():
         try:
             sesion_smtp.login(correo, contrasenna)
             showinfo("Éxito", "Se ha iniciado sesión")
+            ventanaIniciarSesion.destroy()
             return pantallaNuevoCorreo(correo, contrasenna)
         except:
             showerror("Error", "No se pudo iniciar sesión con la cuenta: " + correo)
@@ -422,37 +434,38 @@ def pantallaLogin():
 
 
 def funcionBotonBuscar():
-    cantidad = txt_Buscar.get()
+    if comprobarConexion():
+        cantidad = txt_Buscar.get()
 
-    try:
-        cantidad = int(cantidad)
+        try:
+            cantidad = int(cantidad)
 
-        if cantidad > 50 or cantidad < 1:
-            return showerror("Error", "La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
-    except:
-        return showerror("Error", "La cantidad de frases debe ser un número entero.")
+            if cantidad > 50 or cantidad < 1:
+                return showerror("Error", "La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
+        except:
+            return showerror("Error", "La cantidad de frases debe ser un número entero.")
 
-    for cant in range(cantidad):
+        for cant in range(cantidad):
 
-        r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
-        json_body = r.json()
+            r = request("GET", "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote")
+            json_body = r.json()
 
-        id = json_body["id"]
-        frase = json_body["starWarsQuote"]
-        nombre = separarNombre(frase)
-        frase = obtenerFrase(frase, nombre)
-        if not verificarFrase(id):
-            generarMatriz(id, frase, nombre)
-        else:
-            print("personaje: " + nombre + " frase repetida " + frase)
+            id = json_body["id"]
+            frase = json_body["starWarsQuote"]
+            nombre = separarNombre(frase)
+            frase = obtenerFrase(frase, nombre)
+            if not verificarFrase(id):
+                generarMatriz(id, frase, nombre)
 
-        generarDiccionario(nombre)
+            generarDiccionario(nombre)
 
-    print(dicc)
-    mostrarFrases()
+        mostrarFrases()
 
-    personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
-    lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+        personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
+        lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+    else:
+        showerror("Error", "No hay conexión a Internet.")
+
 
 def separarFrasesSeleccionadas(frase):
     frase = frase[22:]
@@ -471,31 +484,37 @@ def generarListaEnviarCorreo():
                         id = fila[1].index(frase)
                         id = fila[2][id]
                         generarMatriz(id, frase, personaje, fila[3], correo=True)
-    print(frasesCorreo)
-
-def funcionBotonEnviarCorreo():
-    frasesSeleccionadas = listbox_Frases.curselection()
-    if not len(frasesSeleccionadas) == 0:
-        for frase in frasesSeleccionadas:
-            separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
-        generarListaEnviarCorreo()
-        generarXML(frasesCorreo)
-        pantallaLogin()
-    else:
-        showerror("Error", "Debe seleccionar al menos una frase.")
 
 def funcionBotonShare():
     if comprobarConexion():
-        showinfo("Información", "Seleccione las frases que desee compartir.")
+        btn_Share.config(state="disable")
+        btn_Buscar.config(state="disable")
+        txt_Buscar.config(state="disable")
+        if len(listbox_Frases.get(0, END)) == 0:
+            showerror("Error", "Se deben buscar frases primero.")
+        else:
+            showinfo("Información", "Seleccione las frases que desee compartir.")
 
-        btn_EnviarCorreo = Button(frame, text="Enviar correo", command=funcionBotonEnviarCorreo, width=36, height=1)
-        btn_EnviarCorreo.place(x=681, y=300)
-        btn_EnviarCorreo.config(font="Helvetica")
+            def funcionBotonEnviarCorreo():
+                btn_Share.config(state="normal")
+                btn_Buscar.config(state="normal")
+                txt_Buscar.config(state="normal")
+                frasesSeleccionadas = listbox_Frases.curselection()
+                if not len(frasesSeleccionadas) == 0:
+                    for frase in frasesSeleccionadas:
+                        separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
+                    generarListaEnviarCorreo()
+                    generarXML(frasesCorreo)
+                    pantallaLogin()
+                    btn_EnviarCorreo.place_forget()
+                    listbox_Frases.config(state="disable")
+                else:
+                    showerror("Error", "Debe seleccionar al menos una frase.")
 
-        listbox_Frases.config(state="normal", selectmode=MULTIPLE)
-
-    else:
-        showerror("Error", "No hay conexión a Internet.")
+            btn_EnviarCorreo = Button(frame, text="Enviar correo", command=funcionBotonEnviarCorreo, width=36, height=1)
+            btn_EnviarCorreo.place(x=681, y=300)
+            btn_EnviarCorreo.config(font="Helvetica")
+            listbox_Frases.config(state="normal", selectmode=MULTIPLE)
 
 
 # Creación de la ventana
@@ -510,7 +529,7 @@ root.resizable(0, 0)
 # Creación frame
 frame = Frame()
 frame.pack()
-frame.config(width=800, height=600)
+frame.config(width=800, height=625)
 
 # Creación label del título
 lbl_Titulo = Label(frame, text="Frases de Star Wars")
@@ -554,6 +573,16 @@ btn_Buscar.grid(row=1, column=2, sticky="n", padx=10, pady=10)
 btn_Buscar.config(font="Helvetica")
 
 lee(archivoBackUp)
+
+def cerrarPrograma():
+    mensaje = tk.messagebox.askquestion("Cerrar", "¿Desea crear un respaldo?", icon="warning")
+
+    if mensaje == 'yes':
+        generarXML(listaMatriz, True)
+    root.destroy()
+
+
+root.protocol("WM_DELETE_WINDOW", cerrarPrograma)
 
 #Inicio de la ventana
 root.mainloop()
