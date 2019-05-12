@@ -31,9 +31,9 @@ frasesCorreo = [] #Lista que contiene las que serán enviadas por correo
 # Definición de fuciones
 def cargarBackUp(raiz):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Carga el archivo backUp en caso de existir
+    Entradas: raiz(obj) Raiz que tiene la información del xml
+    Salidas: Carga el backup y retorna ""
     """
     for personaje in raiz:
         autor = personaje.find("autor").text
@@ -54,7 +54,7 @@ def cargarBackUp(raiz):
 def graba(nomArchGrabar, raiz):
     """
     Función: Graba el nombre del archivo.
-    Entradas: nomArchGrabar(str) Nombre que se le pondrá al archivo, raiz()
+    Entradas: nomArchGrabar(str) Nombre que se le pondrá al archivo, raiz(obj) Raiz que tiene la información del xml
     Salidas: NA
     """
     try:
@@ -66,9 +66,9 @@ def graba(nomArchGrabar, raiz):
 
 def lee(nomArchLeer):
     """
-    Función: Lee el archivo "canciones"
+    Función: Lee el archivo "backUp.xml"
     Entradas: nomArchLeer(string) Es el nombre del archivo
-    Salidas: Retorna lista
+    Salidas: Llama a cargarBackUp y muestra un mensaje según lo ocurrido
     """
 
     try:
@@ -82,9 +82,9 @@ def lee(nomArchLeer):
 
 def mostrarFrases():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Muestra las frases en el listbox
+    Entradas: NA
+    Salidas: Muestra las frases en el listbox y retorna ""
     """
     listbox_Frases.config(state="normal")
     listbox_Frases.delete(0, END) #Refrescar
@@ -95,13 +95,14 @@ def mostrarFrases():
             listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + " Personaje: "
                                   + personaje[0])
     listbox_Frases.config(state="disabled")
+    return ""
 
 
 def comprobarConexion():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Comprueba si hay conexión a Internet
+    Entradas: NA
+    Salidas: retorna True si se puede establecer la conexión, sino retorna false
     """
     try:
         gethostbyname("google.com")
@@ -114,9 +115,9 @@ def comprobarConexion():
 
 def generarNombreArchivo():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera el nombre del archivo según la fecha y hora actual
+    Entradas: NA
+    Salidas: retorna nombreArchivo
     """
     nombreArchivo = time.strftime("\%d-%m-%Y-%H-%M-%S")
     nombreArchivo = nombreArchivo + ".xml"
@@ -125,8 +126,8 @@ def generarNombreArchivo():
 
 def obtenerPersonajeMasFrases(pMayorCantidadFrases):
     """
-    Función:
-    Entradas:
+    Función: Obtiene el personaje con más frases
+    Entradas: pMayorCantidadFrases(int) variable que almacena la mayor cantidad de frases encontrada en el diccionario
     Salidas:
     """
     codigosPersonaje = list(dicc.keys())
@@ -143,9 +144,9 @@ def obtenerPersonajeMasFrases(pMayorCantidadFrases):
 
 def generarDiccionario(nombre):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera el diccionario con el código de los personajes y la cantidad de llamadas del API
+    Entradas: nombre(str) Nombre del personaje
+    Salidas: retorna dicc
     """
     for dato in listaMatriz:
         if dato[0] == nombre:
@@ -160,9 +161,9 @@ def generarDiccionario(nombre):
 
 def generarCodigoContador(num):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera el código que contiene el contador de los personajes
+    Entradas: num(int) Número que lleva el contador de personajes
+    Salidas: retorna codigo
     """
     if num <= 9:
         codigo = "00" + str(num)
@@ -175,9 +176,9 @@ def generarCodigoContador(num):
 
 def generarCodigoAplicacion(nombre):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera el código de cada personaje
+    Entradas: nombre(str) Nombre del personaje
+    Salidas: retorna codigo
     """
     ultimaLetra = len(nombre)-1
     serial = generarCodigoContador(len(listaMatriz)+1)
@@ -186,9 +187,9 @@ def generarCodigoAplicacion(nombre):
 
 def verificarFrase(id):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Verifica que la frase no esté guardada
+    Entradas: id(int) Id de la frase
+    Salidas: retorna True si la frase está, sino retorna False
     """
     for fila in listaMatriz:
         if id in fila[2]:
@@ -197,9 +198,9 @@ def verificarFrase(id):
 
 def separarNombre(frase):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Separa el nombre del personaje de la frase
+    Entradas: frase(str) Frase enviada por el API
+    Salidas: retorna el nombre del personaje
     """
     largo = len(frase) - 1
     for i in range(largo, 0, -1):
@@ -225,9 +226,11 @@ def separarNombre(frase):
 
 def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera la matriz principal
+    Entradas: id(int) Id de la frase, frase(str) Frase dada, nombre(str) Nombre del personaje,
+     codigoAplicacion(str)Codigo de cada personaje, correo(bool) Bandera que indica si creará una matriz para enviar por
+     correo o si es una matriz para imprimir en pantalla
+    Salidas: Crea la matriz y retorna ""
     """
     if not correo:
         for fila in listaMatriz:
@@ -256,11 +259,13 @@ def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
     else:
         frasesCorreo.append(nuevoPersonaje)
 
+    return ""
+
 def obtenerFrase(frase, nombre):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Obtiene la frase del aPI
+    Entradas: frase(str) Frase enviada por el API, nombre(str) Nombre del personaje
+    Salidas: retorna la fraseFinal
     """
     if not nombre == "Riyo Chuchi": #Es la excepción porque incluye el episodio
         frase = frase[:(len(frase) - len(nombre)) - 3]
@@ -281,9 +286,11 @@ def obtenerFrase(frase, nombre):
 
 def generarXML(pLista, backUp=False):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera el archivo .xml
+    Entradas: pLista(list) Lista que puede contener la información de la matriz principal o la información de la matriz
+    que se enviará por correo, backUp(bool) Bandera que indica si se creará un xml para backUp o si será un xml para
+    enviar por correo
+    Salidas: Crea el archivo xml según lo especificado y retorna ""
     """
     if not len(pLista) == 0:
         raiz = ElementTree.Element('personajes')
@@ -323,11 +330,14 @@ def generarXML(pLista, backUp=False):
     else:
         showinfo("Error", "No hay frases por guardar.")
 
+    return ""
+
 def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Envíar un correo con el archivo xml generado
+    Entradas: remitente(str) Usuario que enviará el correo, contrasenna(str) Contraseña del usuario,
+    destinatarios(list) Lista de destinatarios, asunto(str) Asunto del correo, cuerpo(str) Cuerpo del correo
+    Salidas: Envía el correo y cierra la conexión
     """
     if comprobarConexion():
 
@@ -402,9 +412,9 @@ def popupmsg(msg):
 
 def pantallaNuevoCorreo(correo, contrasenna):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Inicia la pantalla para enviar un correo
+    Entradas: correo(str) Correo del usuario, contrasenna(str) Contraseña del usuario
+    Salidas: Se muestra la pantalla para enviar un correo
     """
     ventanaCorreoNuevo = Toplevel()
     ventanaCorreoNuevo.title("Correo nuevo")
@@ -432,9 +442,9 @@ def pantallaNuevoCorreo(correo, contrasenna):
 
     def enviar():
         """
-        Función:
-        Entradas:
-        Salidas:
+        Función: Envía el correo
+        Entradas: NA
+        Salidas: Envía el correo y cierra la ventana
         """
         if comprobarConexion():
 
@@ -459,9 +469,9 @@ def pantallaNuevoCorreo(correo, contrasenna):
 
 def pantallaLogin():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Muestra la pantalla del login
+    Entradas: Na
+    Salidas: Muestra la pantalla del login
     """
     ventanaIniciarSesion = Toplevel(root)
     ventanaIniciarSesion.title("Iniciar sesión")
@@ -490,9 +500,9 @@ def pantallaLogin():
 
     def funcionBotonIniciarSesion():
         """
-        Función:
-        Entradas:
-        Salidas:
+        Función: Inicia sesión con gmail
+        Entradas: NA
+        Salidas: Retorna pantallaCorreoNuevo en caso de tener un inicio de sesión exitoso, sino retorna pantallaLogin
         """
         correo = txt_Usuario.get().lower()
         contrasenna = txt_Contrasenna.get()
@@ -526,9 +536,9 @@ def pantallaLogin():
 
 def funcionBotonBuscar():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Busca las frases según la cantidad de veces que el usuario lo solicite
+    Entradas: NA
+    Salidas: Muestra las frases buscadas por el usuario
     """
     if comprobarConexion():
         cantidad = txt_Buscar.get()
@@ -565,19 +575,20 @@ def funcionBotonBuscar():
 
 def separarFrasesSeleccionadas(frase):
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Separa las frases seleccionadas en el listbox para obtener una lista con la frase y el personaje
+    Entradas: frase(str) Frase obtenida del listbox
+    Salidas: Agrega la frase y el personaje a listaFrasesSeleccionadas respectivamente y retorna ""
     """
     frase = frase[22:]
     listaDividir = frase.split(" Personaje: ")
     listaFrasesSeleccionadas.append(listaDividir)
+    return ""
 
 def generarListaEnviarCorreo():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Genera la lista para enviar por correo
+    Entradas: NA
+    Salidas: Genera la matriz que creará el archivo XML para enviar por correo y retorna ""
     """
     for fraseSelecionada in listaFrasesSeleccionadas:
         personaje = fraseSelecionada[1]
@@ -589,12 +600,13 @@ def generarListaEnviarCorreo():
                         id = fila[1].index(frase)
                         id = fila[2][id]
                         generarMatriz(id, frase, personaje, fila[3], correo=True)
+    return ""
 
 def funcionBotonShare():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Permite seleccionar las frases para enviar por correo
+    Entradas: NA
+    Salidas: Habilita el listbox para seleccionar las frases y deshabilita el botón share, buscar y el txt_Buscar
     """
     if comprobarConexion():
         btn_Share.config(state="disable")
@@ -607,9 +619,9 @@ def funcionBotonShare():
 
             def funcionBotonEnviarCorreo():
                 """
-                Función:
-                Entradas:
-                Salidas:
+                Función: Prepara toda la información necesaria para enviar un correo
+                Entradas: NA
+                Salidas: Habilita el btn_Share, btn_Buscar y txt_Buscar y abre la pantalla del login
                 """
                 btn_Share.config(state="normal")
                 btn_Buscar.config(state="normal")
@@ -633,15 +645,15 @@ def funcionBotonShare():
 
 def cerrarPrograma():
     """
-    Función:
-    Entradas:
-    Salidas:
+    Función: Pregunta si desea generar un backUp antes de cerrar el programa
+    Entradas: NA
+    Salidas: Genera un backUp si la respuesta es yes, sino solo cierra el programa
     """
     mensaje = tk.messagebox.askquestion("Cerrar", "Antes de cerrar el programa ¿Desea crear un respaldo?", icon="warning")
 
     if mensaje == 'yes':
         generarXML(listaMatriz, True)
-    root.destroy()
+    root.quit()
 
 # Creación de la ventana
 root = Tk()

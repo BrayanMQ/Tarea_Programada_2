@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1026">
-              <caret line="638" column="7" selection-start-line="638" selection-start-column="7" selection-end-line="638" selection-end-column="7" />
+            <state relative-caret-position="10866">
+              <caret line="655" column="15" selection-start-line="655" selection-start-column="15" selection-end-line="655" selection-end-column="15" />
               <folding>
                 <element signature="e#195#253#0" expanded="true" />
               </folding>
@@ -284,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557642675758</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Se agregaron los espacios para comentar las funcioens">
+      <created>1557684239943</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1557684239943</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -398,7 +405,8 @@
     <MESSAGE value="Por fin funciona el envío de correo con frases" />
     <MESSAGE value="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp" />
     <MESSAGE value="No sé qué hice" />
-    <option name="LAST_COMMIT_MESSAGE" value="No sé qué hice" />
+    <MESSAGE value="Se agregaron los espacios para comentar las funcioens" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se agregaron los espacios para comentar las funcioens" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -410,7 +418,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
-          <line>334</line>
+          <line>344</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
@@ -554,8 +562,8 @@
     <entry file="file://$PROJECT_DIR$/Archivos_correo/11-05-2019-23-31-33.xml" />
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1026">
-          <caret line="638" column="7" selection-start-line="638" selection-start-column="7" selection-end-line="638" selection-end-column="7" />
+        <state relative-caret-position="10866">
+          <caret line="655" column="15" selection-start-line="655" selection-start-column="15" selection-end-line="655" selection-end-column="15" />
           <folding>
             <element signature="e#195#253#0" expanded="true" />
           </folding>
