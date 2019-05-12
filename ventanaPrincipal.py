@@ -5,7 +5,7 @@
 
 # Importación de funciones
 from socket import gethostbyname, create_connection, error
-from tkinter.messagebox import showinfo, showerror, YESNO
+from tkinter.messagebox import showinfo, showerror
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -389,7 +389,7 @@ def pantallaLogin():
     username_verify = StringVar()
     password_verify = StringVar()
 
-    Label(ventanaIniciarSesion, text="Usuario").pack()
+    Label(ventanaIniciarSesion, text="Correo electrónico").pack()
 
     txt_Usuario = Entry(ventanaIniciarSesion, textvariable=username_verify)
     txt_Usuario.pack()
@@ -575,7 +575,7 @@ btn_Buscar.config(font="Helvetica")
 lee(archivoBackUp)
 
 def cerrarPrograma():
-    mensaje = tk.messagebox.askquestion("Cerrar", "¿Desea crear un respaldo?", icon="warning")
+    mensaje = tk.messagebox.askquestion("Cerrar", "Antes de cerrar el programa ¿Desea crear un respaldo?", icon="warning")
 
     if mensaje == 'yes':
         generarXML(listaMatriz, True)
