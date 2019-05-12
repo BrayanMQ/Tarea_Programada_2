@@ -17,15 +17,16 @@ from tkinter import *
 import tkinter as tk
 import smtplib
 import time
+import os
 
 #Variables globales
 archivoBackUp = "backUp.xml"
-archivoCorreo = ""
+directorio = []
 dicc = {}
 mayorCantidadFrases = 0
-listaMatriz = []
-listaFrasesSeleccionadas = []
-frasesCorreo = []
+listaMatriz = [] #Lista que contiene las frases buscadas
+listaFrasesSeleccionadas = [] #Lista que contiene las frases seleccionadas
+frasesCorreo = [] #Lista que contiene las que serán enviadas por correo
 
 # Definición de fuciones
 def cargarBackUp(raiz):
@@ -100,8 +101,7 @@ def comprobarConexion():
 
 
 def generarNombreArchivo():
-
-    nombreArchivo = time.strftime("%d-%m-%Y-%H-%M-%S")
+    nombreArchivo = time.strftime("\%d-%m-%Y-%H-%M-%S")
     nombreArchivo = nombreArchivo + ".xml"
     return nombreArchivo
 
@@ -225,7 +225,7 @@ def obtenerFrase(frase, nombre):
 
     return fraseFinal
 
-def generarXML(pLista):
+def generarXML(pLista, backUp=False):
     raiz = ElementTree.Element('personajes')
     for personajeMatriz in pLista:
         # Crear estructura del XML
@@ -248,14 +248,24 @@ def generarXML(pLista):
         codigo.text = personajeMatriz[3]
         cantApariciones.text = str(dicc[personajeMatriz[3]])
 
-    archivoCorreo = generarNombreArchivo()
-    graba(archivoCorreo, raiz)
+    try:
+        os.mkdir("Archivos_correo")
+    except:
+        if backUp:
+            graba(archivoBackUp, raiz)
+        else:
+            archivoCorreo = generarNombreArchivo()
+            file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
+            archivoCorreo = archivoCorreo[1:]
+            directorio.append(file_Path)
+            directorio.append(archivoCorreo)
+            graba(directorio[0], raiz)
 
-def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo, nombreArchivo):
+def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
 
     # Iniciamos los parámetros del script
-    ruta_adjunto = nombreArchivo  # Lugar donde se encuentra el archivo
-    nombre_adjunto = nombreArchivo   # Nombre del archivo que se enviará
+    ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
+    nombre_adjunto = directorio[1]   # Nombre del archivo que se enviará
 
 
     # Creamos el objeto mensaje
@@ -345,8 +355,7 @@ def pantallaNuevoCorreo(correo, contrasenna):
         enviarCorreo(correo, contrasenna,
                      destinatarios=txt_Para.get(),
                      asunto=txt_Asunto.get(),
-                     cuerpo=txt_Mensaje.get("1.0", "end-1c"),
-                     nombreArchivo=archivoCorreo)
+                     cuerpo=txt_Mensaje.get("1.0", "end-1c"))
         return ""
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
@@ -416,14 +425,10 @@ def funcionBotonBuscar():
     cantidad = txt_Buscar.get()
 
     try:
-
         cantidad = int(cantidad)
 
         if cantidad > 50 or cantidad < 1:
             return showerror("Error", "La cantidad de frases debe ser menor o igual a 50 y mayor o igual a 1.")
-
-
-
     except:
         return showerror("Error", "La cantidad de frases debe ser un número entero.")
 
@@ -488,7 +493,6 @@ def funcionBotonShare():
         btn_EnviarCorreo.config(font="Helvetica")
 
         listbox_Frases.config(state="normal", selectmode=MULTIPLE)
-
 
     else:
         showerror("Error", "No hay conexión a Internet.")
