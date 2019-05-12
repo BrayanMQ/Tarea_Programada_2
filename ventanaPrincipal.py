@@ -22,17 +22,21 @@ archivoBackUp = "backUp.xml"
 dicc = {}
 mayorCantidadFrases = 0
 listaMatriz = []
+listaFrasesSeleccionadas = []
+frasesCorreo = []
 
 # Definición de fuciones
 def cargarBackUp(raiz):
     for personaje in raiz:
         autor = personaje.find("autor").text
         codigoApp = personaje.find("codigo").text
+        cantApariciones = personaje.find("cantApariciones").text
+        dicc[codigoApp] = int(cantApariciones)
         for frases in personaje.findall("frase"):
             frase = frases.find("texto").text
             idFrase = frases.find("id").text
             generarMatriz(idFrase, frase, autor, codigoApp)
-            generarDiccionario(autor)
+            #generarDiccionario(autor)
 
     print(dicc)
     mostrarFrases()
@@ -61,29 +65,14 @@ def lee(nomArchLeer):
     Entradas: nomArchLeer(string) Es el nombre del archivo
     Salidas: Retorna lista
     """
-    lista = []
+
     try:
         tree = ElementTree.parse(nomArchLeer)
         raiz = tree.getroot()
         cargarBackUp(raiz)
         showinfo("Back up", "Se cargó con éxito el back up.")
-        return lista
     except:
         showinfo("Back up", "No se ha encontrado un archivo back up.")
-        return lista
-
-def mostrarFrases():
-    listbox_Frases.config(state="normal")
-    listbox_Frases.delete(0, END) #Refrescar
-    contador = 0
-    for personaje in listaMatriz:
-        for frase in personaje[1]:
-            contador += 1
-            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
-                                  + personaje[0] + "\n")
-            contador += 1
-            listbox_Frases.insert(contador, "\n")
-    #listbox_Frases.config(state="disabled")
 
 
 def mostrarFrases():
@@ -93,11 +82,9 @@ def mostrarFrases():
     for personaje in listaMatriz:
         for frase in personaje[1]:
             contador += 1
-            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + ". Personaje: "
-                                  + personaje[0] + "\n")
-            contador += 1
-            listbox_Frases.insert(contador, "\n")
-    #listbox_Frases.config(state="disabled")
+            listbox_Frases.insert(contador, "Código " + personaje[3] + " Frase: " + frase + " Personaje: "
+                                  + personaje[0])
+    listbox_Frases.config(state="disabled")
 
 
 def comprobarConexion():
@@ -122,7 +109,7 @@ def obtenerPersonajeMasFrases(pMayorCantidadFrases):
     mayorCantidadFrases = pMayorCantidadFrases
     for codigo in codigosPersonaje:
         cantidadFrases = dicc[codigo]
-        if cantidadFrases > mayorCantidadFrases:
+        if cantidadFrases >= mayorCantidadFrases:
             mayorCantidadFrases = cantidadFrases
             for dato in listaMatriz:
                 if codigo == dato[3]:
@@ -190,12 +177,19 @@ def separarNombre(frase):
             return nombre
     return "Error"
 
-def generarMatriz(id, frase, nombre, codigoAplicacion=""):
-    for fila in listaMatriz:
-        if fila[0] == nombre:
-            fila[1].append(frase)
-            fila[2].append(id)
-            return ""
+def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
+    if not correo:
+        for fila in listaMatriz:
+            if fila[0] == nombre:
+                fila[1].append(frase)
+                fila[2].append(id)
+                return ""
+    else:
+        for fila in frasesCorreo:
+            if fila[0] == nombre:
+                fila[1].append(frase)
+                fila[2].append(id)
+                return ""
 
     nuevoPersonaje = []
     nuevoPersonaje.append(nombre)
@@ -206,7 +200,10 @@ def generarMatriz(id, frase, nombre, codigoAplicacion=""):
     nuevoPersonaje.append(codigoAplicacion)
 
     # Agrega toda la información del personaje a la matriz
-    listaMatriz.append(nuevoPersonaje)
+    if not correo:
+        listaMatriz.append(nuevoPersonaje)
+    else:
+        frasesCorreo.append(nuevoPersonaje)
 
 def obtenerFrase(frase, nombre):
     if not nombre == "Riyo Chuchi": #Es la excepción porque incluye el episodio
@@ -226,7 +223,7 @@ def obtenerFrase(frase, nombre):
 
     return fraseFinal
 
-def generarXML():
+def generarXML(backUp):
     raiz = ElementTree.Element('personajes')
     for personajeMatriz in listaMatriz:
 
@@ -234,6 +231,7 @@ def generarXML():
         personaje = ElementTree.SubElement(raiz, 'personaje')
         autor = ElementTree.SubElement(personaje, 'autor')
         contador = 0
+
         for frasePersonaje in personajeMatriz[1]:
 
                 frase = ElementTree.SubElement(personaje, 'frase')
@@ -244,10 +242,10 @@ def generarXML():
                 idFrase.text = str(personajeMatriz[2][contador])
                 contador += 1
         codigo = ElementTree.SubElement(personaje, 'codigo')
-
+        cantApariciones = ElementTree.SubElement(personaje, 'cantApariciones')
         autor.text = personajeMatriz[0]
         codigo.text = personajeMatriz[3]
-
+        cantApariciones.text = str(dicc[personajeMatriz[3]])
     graba(archivoBackUp, raiz)
 
 def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo, nombreArchivo):
@@ -457,13 +455,48 @@ def funcionBotonBuscar():
     personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
     lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
 
+def separarFrasesSeleccionadas(frase):
+    frase = frase[22:]
+    listaDividir = frase.split(" Personaje: ")
+    listaFrasesSeleccionadas.append(listaDividir)
+
+def generarListaEnviarCorreo():
+
+    for fraseSelecionada in listaFrasesSeleccionadas:
+        personaje = fraseSelecionada[1]
+        for fila in listaMatriz:
+            if fila[0] == personaje:
+                fraseSeleccion = fraseSelecionada[0]
+                for frase in fila[1]:
+                    if fraseSeleccion == frase:
+                        id = fila[1].index(frase)
+                        id = fila[2][id]
+                        generarMatriz(id, frase, personaje, fila[3], correo=True)
+    print(frasesCorreo)
+
+def funcionBotonEnviarCorreo():
+    frasesSeleccionadas = listbox_Frases.curselection()
+    if not len(frasesSeleccionadas) == 0:
+        for frase in frasesSeleccionadas:
+            separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
+        generarListaEnviarCorreo()
+        generarXML(backUp=False)
+    else:
+        showerror("Error", "Debe seleccionar al menos una frase.")
 
 def funcionBotonShare():
     if comprobarConexion():
-        generarXML()
-        pantallaLogin()
+        showinfo("Información", "Seleccione las frases que desee compartir.")
+
+        btn_EnviarCorreo = Button(frame, text="Enviar correo", command=funcionBotonEnviarCorreo, width=36, height=1)
+        btn_EnviarCorreo.place(x=681, y=300)
+        btn_EnviarCorreo.config(font="Helvetica")
+
+        listbox_Frases.config(state="normal", selectmode=MULTIPLE)
+
+
     else:
-        popupmsg("No hay conexión a Internet.")
+        showerror("Error", "No hay conexión a Internet.")
 
 
 # Creación de la ventana
@@ -488,7 +521,7 @@ lbl_Titulo.config(font="Helvetica")
 # Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
 listbox_Frases.grid(row=1, column=0, padx=10, pady=10)
-#listbox_Frases.config(state="disabled")
+listbox_Frases.config(state="disabled")
 
 #Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
@@ -521,7 +554,7 @@ btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, 
 btn_Buscar.grid(row=1, column=2, sticky="n", padx=10, pady=10)
 btn_Buscar.config(font="Helvetica")
 
-listaMatriz = lee(archivoBackUp)
+lee(archivoBackUp)
 
 #Inicio de la ventana
 root.mainloop()
