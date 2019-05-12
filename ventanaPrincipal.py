@@ -17,8 +17,10 @@ from tkinter import *
 import tkinter as tk
 import smtplib
 import time
+
 #Variables globales
 archivoBackUp = "backUp.xml"
+archivoCorreo = ""
 dicc = {}
 mayorCantidadFrases = 0
 listaMatriz = []
@@ -223,10 +225,9 @@ def obtenerFrase(frase, nombre):
 
     return fraseFinal
 
-def generarXML(backUp):
+def generarXML(pLista):
     raiz = ElementTree.Element('personajes')
-    for personajeMatriz in listaMatriz:
-
+    for personajeMatriz in pLista:
         # Crear estructura del XML
         personaje = ElementTree.SubElement(raiz, 'personaje')
         autor = ElementTree.SubElement(personaje, 'autor')
@@ -234,42 +235,35 @@ def generarXML(backUp):
 
         for frasePersonaje in personajeMatriz[1]:
 
-                frase = ElementTree.SubElement(personaje, 'frase')
-                texto = ElementTree.SubElement(frase, 'texto')
-                idFrase = ElementTree.SubElement(frase, 'id')
+            frase = ElementTree.SubElement(personaje, 'frase')
+            texto = ElementTree.SubElement(frase, 'texto')
+            idFrase = ElementTree.SubElement(frase, 'id')
 
-                texto.text = frasePersonaje
-                idFrase.text = str(personajeMatriz[2][contador])
-                contador += 1
+            texto.text = frasePersonaje
+            idFrase.text = str(personajeMatriz[2][contador])
+            contador += 1
         codigo = ElementTree.SubElement(personaje, 'codigo')
         cantApariciones = ElementTree.SubElement(personaje, 'cantApariciones')
         autor.text = personajeMatriz[0]
         codigo.text = personajeMatriz[3]
         cantApariciones.text = str(dicc[personajeMatriz[3]])
-    graba(archivoBackUp, raiz)
+
+    archivoCorreo = generarNombreArchivo()
+    graba(archivoCorreo, raiz)
 
 def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo, nombreArchivo):
+
     # Iniciamos los parámetros del script
-    remitente = remitente
-    destinatarios = destinatarios
-    asunto = asunto
-    cuerpo = cuerpo
-    ruta_adjunto = "backUp.xml"  # Lugar donde se encuentra el archivo
-    nombre_adjunto = "backUp.xml"  # Nombre del archivo que se enviará
-    contrasenna = contrasenna
+    ruta_adjunto = nombreArchivo  # Lugar donde se encuentra el archivo
+    nombre_adjunto = nombreArchivo   # Nombre del archivo que se enviará
+
 
     # Creamos el objeto mensaje
     mensaje = MIMEMultipart()
 
     # Establecemos los atributos del mensaje
     mensaje['From'] = remitente
-    #if len(destinatarios) == 1:
-     #   mensaje['To'] = "".join(destinatarios)
-    #else:
-     #   mensaje['To'] = ", ".join(destinatarios)
-
     mensaje['To'] = destinatarios
-
     mensaje['Subject'] = asunto
 
     # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
@@ -281,7 +275,7 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo, nombreAr
     # Creamos un objeto MIME base
     adjunto_MIME = MIMEBase('application', 'octet-stream')
     # Y le cargamos el archivo adjunto
-    adjunto_MIME.set_payload((archivo_adjunto).read())
+    adjunto_MIME.set_payload(archivo_adjunto.read())
     # Codificamos el objeto en BASE64
     encoders.encode_base64(adjunto_MIME)
     # Agregamos una cabecera al objeto
@@ -352,7 +346,7 @@ def pantallaNuevoCorreo(correo, contrasenna):
                      destinatarios=txt_Para.get(),
                      asunto=txt_Asunto.get(),
                      cuerpo=txt_Mensaje.get("1.0", "end-1c"),
-                     nombreArchivo=generarNombreArchivo())
+                     nombreArchivo=archivoCorreo)
         return ""
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
@@ -480,7 +474,8 @@ def funcionBotonEnviarCorreo():
         for frase in frasesSeleccionadas:
             separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
         generarListaEnviarCorreo()
-        generarXML(backUp=False)
+        generarXML(frasesCorreo)
+        pantallaLogin()
     else:
         showerror("Error", "Debe seleccionar al menos una frase.")
 
