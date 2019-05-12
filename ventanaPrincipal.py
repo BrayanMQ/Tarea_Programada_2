@@ -30,6 +30,11 @@ frasesCorreo = [] #Lista que contiene las que serán enviadas por correo
 
 # Definición de fuciones
 def cargarBackUp(raiz):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     for personaje in raiz:
         autor = personaje.find("autor").text
         codigoApp = personaje.find("codigo").text
@@ -76,6 +81,11 @@ def lee(nomArchLeer):
 
 
 def mostrarFrases():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     listbox_Frases.config(state="normal")
     listbox_Frases.delete(0, END) #Refrescar
     contador = 0
@@ -88,6 +98,11 @@ def mostrarFrases():
 
 
 def comprobarConexion():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     try:
         gethostbyname("google.com")
         conexion = create_connection(("google.com", 80), 1)
@@ -98,12 +113,22 @@ def comprobarConexion():
 
 
 def generarNombreArchivo():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     nombreArchivo = time.strftime("\%d-%m-%Y-%H-%M-%S")
     nombreArchivo = nombreArchivo + ".xml"
     return nombreArchivo
 
 
 def obtenerPersonajeMasFrases(pMayorCantidadFrases):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     codigosPersonaje = list(dicc.keys())
     mayorCantidadFrases = pMayorCantidadFrases
     for codigo in codigosPersonaje:
@@ -117,6 +142,11 @@ def obtenerPersonajeMasFrases(pMayorCantidadFrases):
     return nombrePersonaje
 
 def generarDiccionario(nombre):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     for dato in listaMatriz:
         if dato[0] == nombre:
             codigoPersonaje = dato[3]
@@ -129,7 +159,11 @@ def generarDiccionario(nombre):
             return dicc
 
 def generarCodigoContador(num):
-
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if num <= 9:
         codigo = "00" + str(num)
     elif num <= 99:
@@ -140,18 +174,33 @@ def generarCodigoContador(num):
     return codigo
 
 def generarCodigoAplicacion(nombre):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     ultimaLetra = len(nombre)-1
     serial = generarCodigoContador(len(listaMatriz)+1)
     codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
     return codigo
 
 def verificarFrase(id):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     for fila in listaMatriz:
         if id in fila[2]:
             return True
     return False
 
 def separarNombre(frase):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     largo = len(frase) - 1
     for i in range(largo, 0, -1):
         if frase[i] == "-" or frase[i] == "?" or frase[i] == "—":
@@ -175,6 +224,11 @@ def separarNombre(frase):
     return "Error"
 
 def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if not correo:
         for fila in listaMatriz:
             if fila[0] == nombre:
@@ -203,6 +257,11 @@ def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
         frasesCorreo.append(nuevoPersonaje)
 
 def obtenerFrase(frase, nombre):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if not nombre == "Riyo Chuchi": #Es la excepción porque incluye el episodio
         frase = frase[:(len(frase) - len(nombre)) - 3]
     else:
@@ -221,7 +280,11 @@ def obtenerFrase(frase, nombre):
     return fraseFinal
 
 def generarXML(pLista, backUp=False):
-
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if not len(pLista) == 0:
         raiz = ElementTree.Element('personajes')
         for personajeMatriz in pLista:
@@ -261,6 +324,11 @@ def generarXML(pLista, backUp=False):
         showinfo("Error", "No hay frases por guardar.")
 
 def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if comprobarConexion():
 
         # Iniciamos los parámetros del script
@@ -319,6 +387,11 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
         showerror("Error", "No hay conexión a Internet.")
 
 def popupmsg(msg):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     popup = tk.Tk()
     popup.wm_title("Información")
     label = ttk.Label(popup, text=msg, font="Helvetica")
@@ -328,7 +401,11 @@ def popupmsg(msg):
     popup.mainloop()
 
 def pantallaNuevoCorreo(correo, contrasenna):
-
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     ventanaCorreoNuevo = Toplevel()
     ventanaCorreoNuevo.title("Correo nuevo")
     ventanaCorreoNuevo.geometry("475x280+750+300")
@@ -354,6 +431,11 @@ def pantallaNuevoCorreo(correo, contrasenna):
     Label(ventanaCorreoNuevo, text="Archivo adjunto: " + directorio[1]).grid(row=4, column=0, sticky=W)
 
     def enviar():
+        """
+        Función:
+        Entradas:
+        Salidas:
+        """
         if comprobarConexion():
 
             destinatarios = txt_Para.get()
@@ -376,7 +458,11 @@ def pantallaNuevoCorreo(correo, contrasenna):
     btn_Enviar.grid(row=5, column=0, padx=10, pady=10, sticky=NSEW)
 
 def pantallaLogin():
-
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     ventanaIniciarSesion = Toplevel(root)
     ventanaIniciarSesion.title("Iniciar sesión")
     ventanaIniciarSesion.geometry("300x250+750+300")
@@ -403,6 +489,11 @@ def pantallaLogin():
     Label(ventanaIniciarSesion, text="").pack()
 
     def funcionBotonIniciarSesion():
+        """
+        Función:
+        Entradas:
+        Salidas:
+        """
         correo = txt_Usuario.get().lower()
         contrasenna = txt_Contrasenna.get()
 
@@ -434,6 +525,11 @@ def pantallaLogin():
 
 
 def funcionBotonBuscar():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if comprobarConexion():
         cantidad = txt_Buscar.get()
 
@@ -468,12 +564,21 @@ def funcionBotonBuscar():
 
 
 def separarFrasesSeleccionadas(frase):
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     frase = frase[22:]
     listaDividir = frase.split(" Personaje: ")
     listaFrasesSeleccionadas.append(listaDividir)
 
 def generarListaEnviarCorreo():
-
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     for fraseSelecionada in listaFrasesSeleccionadas:
         personaje = fraseSelecionada[1]
         for fila in listaMatriz:
@@ -486,6 +591,11 @@ def generarListaEnviarCorreo():
                         generarMatriz(id, frase, personaje, fila[3], correo=True)
 
 def funcionBotonShare():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
     if comprobarConexion():
         btn_Share.config(state="disable")
         btn_Buscar.config(state="disable")
@@ -496,6 +606,11 @@ def funcionBotonShare():
             showinfo("Información", "Seleccione las frases que desee compartir.")
 
             def funcionBotonEnviarCorreo():
+                """
+                Función:
+                Entradas:
+                Salidas:
+                """
                 btn_Share.config(state="normal")
                 btn_Buscar.config(state="normal")
                 txt_Buscar.config(state="normal")
@@ -516,6 +631,17 @@ def funcionBotonShare():
             btn_EnviarCorreo.config(font="Helvetica")
             listbox_Frases.config(state="normal", selectmode=MULTIPLE)
 
+def cerrarPrograma():
+    """
+    Función:
+    Entradas:
+    Salidas:
+    """
+    mensaje = tk.messagebox.askquestion("Cerrar", "Antes de cerrar el programa ¿Desea crear un respaldo?", icon="warning")
+
+    if mensaje == 'yes':
+        generarXML(listaMatriz, True)
+    root.destroy()
 
 # Creación de la ventana
 root = Tk()
@@ -573,14 +699,6 @@ btn_Buscar.grid(row=1, column=2, sticky="n", padx=10, pady=10)
 btn_Buscar.config(font="Helvetica")
 
 lee(archivoBackUp)
-
-def cerrarPrograma():
-    mensaje = tk.messagebox.askquestion("Cerrar", "Antes de cerrar el programa ¿Desea crear un respaldo?", icon="warning")
-
-    if mensaje == 'yes':
-        generarXML(listaMatriz, True)
-    root.destroy()
-
 
 root.protocol("WM_DELETE_WINDOW", cerrarPrograma)
 

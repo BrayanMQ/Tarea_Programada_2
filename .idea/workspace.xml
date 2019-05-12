@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp">
+    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ventanaPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/ventanaPrincipal.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +16,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="16" column="20" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="16" selection-end-column="20" />
+            <state relative-caret-position="-1026">
+              <caret line="638" column="7" selection-start-line="638" selection-start-column="7" selection-end-line="638" selection-end-column="7" />
+              <folding>
+                <element signature="e#195#253#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -90,7 +94,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -102,6 +105,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -273,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557642038455</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="No sé qué hice">
+      <created>1557642675757</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1557642675758</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -287,20 +298,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09747102" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49683878" weight="0.29577464" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4963119" visible="true" weight="0.29577464" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49894625" weight="0.42470205" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49841937" weight="0.32827735" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49894625" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49947312" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.50316125" side_tool="true" visible="true" weight="0.24702059" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5036881" side_tool="true" visible="true" weight="0.29577464" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -385,7 +397,8 @@
     <MESSAGE value="Enviar correos con frases" />
     <MESSAGE value="Por fin funciona el envío de correo con frases" />
     <MESSAGE value="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp" />
+    <MESSAGE value="No sé qué hice" />
+    <option name="LAST_COMMIT_MESSAGE" value="No sé qué hice" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -397,7 +410,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
-          <line>266</line>
+          <line>334</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
@@ -538,17 +551,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Archivos_correo/11-05-2019-23-31-33.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="486" selection-start-column="450" selection-end-column="486" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Archivos_correo/11-05-2019-23-31-33.xml" />
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="20" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="16" selection-end-column="20" />
+        <state relative-caret-position="-1026">
+          <caret line="638" column="7" selection-start-line="638" selection-start-column="7" selection-end-line="638" selection-end-column="7" />
+          <folding>
+            <element signature="e#195#253#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
