@@ -20,12 +20,13 @@ def cargarBackUp(raiz):
         dicc[codigoApp] = int(cantApariciones)
         for frases in personaje.findall("frase"):
             frase = frases.find("texto").text
-            idFrase = frases.find("id").text
+            idFrase = int(frases.find("id").text)
             generarMatriz(idFrase, frase, autor, codigoApp)
     mostrarFrases()
 
     personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
     lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
+    print(listaMatriz)
     return ""
 
 
