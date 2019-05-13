@@ -26,7 +26,6 @@ def cargarBackUp(raiz):
 
     personaje = obtenerPersonajeMasFrases(mayorCantidadFrases)
     lbl_Apariciones.config(text="Personaje con más frases: " + personaje)
-    print(listaMatriz)
     return ""
 
 

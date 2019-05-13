@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp">
+    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/funciones.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ventanaPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/ventanaPrincipal.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="381" column="25" selection-start-line="381" selection-start-column="25" selection-end-line="381" selection-end-column="25" />
+            <state relative-caret-position="318">
+              <caret line="27" column="73" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -26,8 +25,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/funciones.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="54" column="32" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="32" />
+            <state relative-caret-position="161">
+              <caret line="168" selection-start-line="168" selection-end-line="168" />
+              <folding>
+                <element signature="e#27#85#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,12 +45,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>generarXML</find>
-      <find>generarxml</find>
-      <find>enviarc</find>
-      <find>enviarC</find>
-      <find>print</find>
-      <find>#</find>
       <find>generarXml</find>
       <find>generarDiccio</find>
       <find>iniciar</find>
@@ -73,6 +69,12 @@
       <find>protoco</find>
       <find>refres</find>
       <find>boton</find>
+      <find>o die for one's</find>
+      <find>lee</find>
+      <find>generarma</find>
+      <find>what if</find>
+      <find>funcionbotonbus</find>
+      <find>funcion</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -84,8 +86,8 @@
         <option value="$PROJECT_DIR$/../../test/backUp.xml" />
         <option value="$PROJECT_DIR$/backUp.xml" />
         <option value="$PROJECT_DIR$/../../test/main.py" />
-        <option value="$PROJECT_DIR$/ventanaPrincipal.py" />
         <option value="$PROJECT_DIR$/funciones.py" />
+        <option value="$PROJECT_DIR$/ventanaPrincipal.py" />
       </list>
     </option>
   </component>
@@ -101,7 +103,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -113,6 +114,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -298,10 +300,17 @@
       <option name="project" value="LOCAL" />
       <updated>1557684239943</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Problema de frases repetidas solucionado.">
+      <created>1557724363074</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1557724363074</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
-  <component name="TodoView" selected-index="2">
+  <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -311,21 +320,21 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09747102" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1748879" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49947312" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4947313" visible="true" weight="0.2936078" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49841937" weight="0.4225352" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49402094" visible="true" weight="0.294686" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49841937" weight="0.42190015" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49841937" weight="0.32827735" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49894625" weight="0.32936078" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5052687" side_tool="true" visible="true" weight="0.2936078" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50597906" side_tool="true" weight="0.294686" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49894625" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -413,7 +422,8 @@
     <MESSAGE value="Se agregan mensajes de error por conexión a Internet y se agrega la posibilidad de realizar un backUp" />
     <MESSAGE value="No sé qué hice" />
     <MESSAGE value="Se agregaron los espacios para comentar las funcioens" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se agregaron los espacios para comentar las funcioens" />
+    <MESSAGE value="Problema de frases repetidas solucionado." />
+    <option name="LAST_COMMIT_MESSAGE" value="Problema de frases repetidas solucionado." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -422,6 +432,11 @@
           <url>file://$PROJECT_DIR$/../../test/main.py</url>
           <line>8</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ventanaPrincipal.py</url>
+          <line>379</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -465,13 +480,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backUp.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Archivos_correo/11-05-2019-23-31-33.xml" />
     <entry file="file://C:/Program Files (x86)/Python37-32/Lib/encodings/idna.py" />
     <entry file="file://C:/Program Files (x86)/Python37-32/Lib/tkinter/commondialog.py" />
@@ -494,24 +502,28 @@
     <entry file="file://$PROJECT_DIR$/Archivos_correo/share-12-05-2019-17-51-50.xml" />
     <entry file="file://C:/Program Files (x86)/Python37-32/Lib/tkinter/__init__.py" />
     <entry file="file://$PROJECT_DIR$/../../Tarea_Programada_2/ventanaPrincipal.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/backUp.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="2225" selection-start-line="2225" selection-end-line="2225" />
+        <state>
+          <caret column="7513" selection-start-column="7506" selection-end-column="7513" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/funciones.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="54" column="32" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="32" />
+        <state relative-caret-position="161">
+          <caret line="168" selection-start-line="168" selection-end-line="168" />
+          <folding>
+            <element signature="e#27#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ventanaPrincipal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="381" column="25" selection-start-line="381" selection-start-column="25" selection-end-line="381" selection-end-column="25" />
+        <state relative-caret-position="318">
+          <caret line="27" column="73" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
         </state>
       </provider>
     </entry>
