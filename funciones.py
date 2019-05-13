@@ -31,7 +31,7 @@ def graba(nomArchGrabar, raiz):
     Salidas: NA
     """
     try:
-        archivo = open(nomArchGrabar, 'wt')
+        archivo = open(nomArchGrabar, 'w')
         archivo.write(ElementTree.tostring(raiz, encoding='utf-8').decode('utf-8'))
         archivo.close()
     except:

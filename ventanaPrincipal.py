@@ -201,27 +201,30 @@ def pantallaNuevoCorreo(correo, contrasenna):
     """
     ventanaCorreoNuevo = Toplevel()
     ventanaCorreoNuevo.title("Correo nuevo")
-    ventanaCorreoNuevo.geometry("475x280+750+300")
+    ventanaCorreoNuevo.geometry("490x280+750+300")
     ventanaCorreoNuevo.resizable(0, 0)
     ventanaCorreoNuevo.iconbitmap("imagenes/candado.ico")
+    ventanaCorreoNuevo.config(bg="#5DA9F6")
 
     et = StringVar()
     es = StringVar()
-    Label(ventanaCorreoNuevo, text="De: %s" % correo).grid(row=0, column=0, sticky=W)
+    Label(ventanaCorreoNuevo, text="De: %s" % correo, bg="#5DA9F6", fg="white").grid(row=0, column=0, sticky=W)
 
-    Label(ventanaCorreoNuevo, text="Para:").grid(row=1, column=0, sticky=W)
+    Label(ventanaCorreoNuevo, text="Para:", bg="#5DA9F6", fg="white").grid(row=1, column=0, sticky=W)
     txt_Para = Entry(ventanaCorreoNuevo, textvariable=et, width=25)
     txt_Para.grid(row=1, column=1, padx=10, pady=10, sticky=W)
 
-    Label(ventanaCorreoNuevo, text="Asunto:").grid(row=2, column=0, sticky=W)
+    Label(ventanaCorreoNuevo, text="Asunto:", bg="#5DA9F6", fg="white").grid(row=2, column=0, sticky=W)
     txt_Asunto = Entry(ventanaCorreoNuevo, textvariable=es, width=25)
     txt_Asunto.grid(row=2, column=1, padx=10, pady=10, sticky=W)
 
-    Label(ventanaCorreoNuevo, text="Mensaje:").grid(row=3, column=0, sticky=W)
+    Label(ventanaCorreoNuevo, text="Mensaje:", bg="#5DA9F6", fg="white").grid(row=3, column=0, sticky=W)
     txt_Mensaje = Text(ventanaCorreoNuevo, width=25, height=5)
     txt_Mensaje.grid(row=3, column=1, padx=10, pady=10, sticky=W)
 
-    Label(ventanaCorreoNuevo, text="Archivo adjunto: " + directorio[1]).grid(row=4, column=0, sticky=W)
+    lbl_archivo = Label(ventanaCorreoNuevo, text="Archivo adjunto: " + directorio[1])
+    lbl_archivo.grid(row=4, column=0, sticky=W)
+    lbl_archivo.config(bg="#5DA9F6", fg="white")
 
     def enviar():
         """
@@ -251,11 +254,15 @@ def pantallaNuevoCorreo(correo, contrasenna):
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
     btn_Enviar.grid(row=5, column=0, padx=10, pady=10, sticky=NSEW)
+    btn_Enviar.config(font="Helvetica")
 
     def cerrarVentana():
-        btn_Share.config(state="normal")
-        btn_Buscar.config(state="normal")
-        txt_Buscar.config(state="normal")
+        """
+        Función: Activa los widgets del menú principal y cierra la ventaa
+        Entradas: NA
+        Salidas: NA
+        """
+        activarMenuPrincipal()
         ventanaCorreoNuevo.destroy()
 
     ventanaCorreoNuevo.protocol("WM_DELETE_WINDOW", cerrarVentana)
@@ -272,31 +279,37 @@ def pantallaLogin():
     ventanaIniciarSesion.geometry("300x250+750+300")
     ventanaIniciarSesion.resizable(0, 0)
     ventanaIniciarSesion.iconbitmap("imagenes/candado.ico")
+    ventanaIniciarSesion.config(bg="#5DA9F6")
 
-    Label(ventanaIniciarSesion, text="Por favor ingrese sus datos para iniciar sesión.").pack()
-    Label(ventanaIniciarSesion, text="").pack()
+    Label(ventanaIniciarSesion, text="Por favor ingrese sus datos para iniciar sesión.", bg="#5DA9F6",
+          fg="white").pack()
+    Label(ventanaIniciarSesion, text="", bg="#5DA9F6").pack()
 
     username_verify = StringVar()
     password_verify = StringVar()
 
-    Label(ventanaIniciarSesion, text="Correo electrónico").pack()
+    Label(ventanaIniciarSesion, text="Correo electrónico", bg="#5DA9F6", fg="white").pack()
 
     txt_Usuario = Entry(ventanaIniciarSesion, textvariable=username_verify)
     txt_Usuario.pack()
 
-    Label(ventanaIniciarSesion, text="").pack()
-    Label(ventanaIniciarSesion, text="Contraseña").pack()
+    Label(ventanaIniciarSesion, text="", bg="#5DA9F6").pack()
+    Label(ventanaIniciarSesion, text="Contraseña", bg="#5DA9F6", fg="white").pack()
 
     txt_Contrasenna = Entry(ventanaIniciarSesion, textvariable=password_verify, show='*')
     txt_Contrasenna.pack()
 
-    Label(ventanaIniciarSesion, text="").pack()
+    Label(ventanaIniciarSesion, text="", bg="#5DA9F6").pack()
 
     def cerrarVentana():
-        btn_Share.config(state="normal")
-        btn_Buscar.config(state="normal")
-        txt_Buscar.config(state="normal")
+        """
+        Función: Activa los widgets del menú principal y cierra la ventaa
+        Entradas: NA
+        Salidas: NA
+        """
+        activarMenuPrincipal()
         ventanaIniciarSesion.destroy()
+
     ventanaIniciarSesion.protocol("WM_DELETE_WINDOW", cerrarVentana)
 
     def funcionBotonIniciarSesion():
@@ -335,7 +348,8 @@ def pantallaLogin():
             ventanaIniciarSesion.destroy()
             return pantallaLogin()
 
-    Button(ventanaIniciarSesion, text="Iniciar sesión", width=10, height=1, command=funcionBotonIniciarSesion).pack()
+    Button(ventanaIniciarSesion, text="Iniciar sesión", width=10, height=1, command=funcionBotonIniciarSesion,
+           font="Helvetica").pack()
 
 
 def funcionBotonBuscar():
@@ -431,12 +445,22 @@ def cerrarPrograma():
 
 
 def activarMenuPrincipal():
+    """
+    Función: Activa los widgets del menú principal
+    Entradas: NA
+    Salidas: NA
+    """
     btn_Share.config(state="normal")
     btn_Buscar.config(state="normal")
     txt_Buscar.config(state="normal")
 
 
 def desactivarMenuPrincipal():
+    """
+    Función: Desactiva los widgets del menú principal
+    Entradas: NA
+    Salidas: NA
+    """
     btn_Share.config(state="disable")
     btn_Buscar.config(state="disable")
     txt_Buscar.config(state="disable")
@@ -454,12 +478,12 @@ root.resizable(0, 0)
 # Creación frame
 frame = Frame()
 frame.pack()
-frame.config(width=800, height=625)
+frame.config(width=800, height=625, bg="#5DA9F6")
 
 # Creación label del título
 lbl_Titulo = Label(frame, text="Frases de Star Wars")
 lbl_Titulo.grid(row=0, column=0, padx=10, pady=10, sticky="n")
-lbl_Titulo.config(font="Helvetica")
+lbl_Titulo.config(font="Helvetica", fg="white", bg="#5DA9F6")
 
 # Creación listbox
 listbox_Frases = Listbox(frame, height=25, width=105)
@@ -469,6 +493,7 @@ listbox_Frases.config(state="disabled")
 # Creación scroll bar vertical del listbox
 scrollVertical = Scrollbar(frame, orient=VERTICAL, command=listbox_Frases.yview)
 scrollVertical.grid(row=1, column=1, sticky='nsew')
+scrollVertical.config(bg="#5DA9F6")
 listbox_Frases['yscrollcommand'] = scrollVertical.set
 
 # Creación scroll bar horizontal del listbox
@@ -489,7 +514,7 @@ btn_Share.config(font="Helvetica")
 # Creación label apariciones
 lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
 lbl_Apariciones.place(x=681, y=425)
-lbl_Apariciones.config(font="Helvetica")
+lbl_Apariciones.config(font="Helvetica", fg="white", bg="#5DA9F6")
 
 # Creación botón buscar
 btn_Buscar = Button(frame, text="Buscar", command=funcionBotonBuscar, width=20, height=1)
