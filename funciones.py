@@ -23,6 +23,7 @@ listaMatriz = []  # Lista que contiene las frases buscadas
 listaFrasesSeleccionadas = []  # Lista que contiene las frases seleccionadas
 frasesCorreo = []  # Lista que contiene las que serán enviadas por correo
 
+
 # Definición de funciones
 def graba(nomArchGrabar, raiz):
     """

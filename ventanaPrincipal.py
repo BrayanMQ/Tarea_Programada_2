@@ -6,6 +6,7 @@
 # Importación de funciones
 from funciones import *
 
+
 # Definición de fuciones
 def cargarBackUp(raiz):
     """
@@ -168,14 +169,14 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
             showinfo("Éxito", "Se ha enviado el correo a: " + destinatarios + " con éxito.")
         except:
             showerror("Error", "No se pudo enviar el mensaje a: " + destinatarios)
-            mensaje = tk.messagebox.askquestion("Información", "¿Desea reintentar el envío?",icon="warning")
-            if mensaje == 'yes':
-                return pantallaNuevoCorreo(remitente, contrasenna)
+            return True
 
         # Cerramos la conexión
         sesion_smtp.quit()
     else:
         showerror("Error", "No hay conexión a Internet.")
+        return True
+    return False
 
 
 def popupmsg(msg):
@@ -240,15 +241,22 @@ def pantallaNuevoCorreo(correo, contrasenna):
                 ventanaCorreoNuevo.destroy()
                 return pantallaNuevoCorreo(correo, contrasenna)
             else:
+                errorReintentar = False  # Bandera para saber si indicarle al usuario si desea reintentar el envió
+                # en caso de ser necesario
                 for destinatario in destinatarios:
+                    errorReintentar = enviarCorreo(correo, contrasenna,
+                                                   destinatario,
+                                                   asunto=txt_Asunto.get(),
+                                                   cuerpo=txt_Mensaje.get("1.0", "end-1c"))
 
-                    enviarCorreo(correo, contrasenna,
-                                 destinatario,
-                                 asunto=txt_Asunto.get(),
-                                 cuerpo=txt_Mensaje.get("1.0", "end-1c"))
-
+                if errorReintentar:
+                    mensaje = tk.messagebox.askquestion("Información", "¿Desea reintentar el envío?", icon="warning")
+                    if mensaje == 'yes':
+                        ventanaCorreoNuevo.destroy()
+                        return pantallaNuevoCorreo(correo, contrasenna)
+                    else:
+                        activarMenuPrincipal()
                 ventanaCorreoNuevo.destroy()
-                activarMenuPrincipal()
         else:
             showerror("Error", "No hay conexión a Internet.")
 
