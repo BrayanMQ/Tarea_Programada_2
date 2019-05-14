@@ -178,22 +178,6 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
         return True
     return False
 
-
-def popupmsg(msg):
-    """
-    Función:
-    Entradas:
-    Salidas:
-    """
-    popup = tk.Tk()
-    popup.wm_title("Información")
-    label = ttk.Label(popup, text=msg, font="Helvetica")
-    label.pack(side="top", fill="x", pady=10)
-    B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
-    B1.pack()
-    popup.mainloop()
-
-
 def pantallaNuevoCorreo(correo, contrasenna):
     """
     Función: Inicia la pantalla para enviar un correo
@@ -483,10 +467,27 @@ root.iconbitmap("imagenes/icon.ico")
 root.geometry("+400+200")
 root.resizable(0, 0)
 
+def mostrarDesarrolladores():
+    showinfo("Desarrolladores", "Realizado por Ronny Jiménez Bonilla y Brayan Marín Quirós.")
+    return ""
+
+def abrirManualUsuario():
+    os.popen("manual_de_usuario_frases.pdf")
+
 # Creación frame
 frame = Frame()
 frame.pack()
 frame.config(width=800, height=625, bg="#5DA9F6")
+
+menubar = Menu(frame)
+acercaDeMenu = Menu(menubar, tearoff=0)
+acercaDeMenu.add_command(label="Desarrolladores", command=mostrarDesarrolladores)
+acercaDeMenu.add_command(label="Abrir manual de usuario", command=abrirManualUsuario)
+acercaDeMenu.add_separator()
+acercaDeMenu.add_command(label="Guardar y salir", command=cerrarPrograma)
+menubar.add_cascade(label="Acerca de...", menu=acercaDeMenu)
+
+root.config(menu=menubar)
 
 # Creación label del título
 lbl_Titulo = Label(frame, text="Frases de Star Wars")
@@ -536,4 +537,5 @@ lee(archivoBackUp)
 root.protocol("WM_DELETE_WINDOW", cerrarPrograma)
 
 # Inicio de la ventana
+
 root.mainloop()
