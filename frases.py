@@ -118,64 +118,64 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
     destinatarios(list) Lista de destinatarios, asunto(str) Asunto del correo, cuerpo(str) Cuerpo del correo
     Salidas: Envía el correo y cierra la conexión
     """
-    if comprobarConexion():
 
-        # Iniciamos los parámetros del script
-        ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
-        nombre_adjunto = directorio[1]  # Nombre del archivo que se enviará
 
-        # Creamos el objeto mensaje
-        mensaje = MIMEMultipart()
+    # Iniciamos los parámetros del script
+    ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
+    nombre_adjunto = directorio[1]  # Nombre del archivo que se enviará
 
-        # Establecemos los atributos del mensaje
-        mensaje['From'] = remitente
-        mensaje['To'] = destinatarios
-        mensaje['Subject'] = asunto
+    # Creamos el objeto mensaje
+    mensaje = MIMEMultipart()
 
-        # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
-        mensaje.attach(MIMEText(cuerpo, 'plain'))
+    # Establecemos los atributos del mensaje
+    mensaje['From'] = remitente
+    mensaje['To'] = destinatarios
+    mensaje['Subject'] = asunto
 
-        # Abrimos el archivo que vamos a adjuntar
-        archivo_adjunto = open(ruta_adjunto, 'rb')
+    # Agregamos el cuerpo del mensaje como objeto MIME de tipo texto
+    mensaje.attach(MIMEText(cuerpo, 'plain'))
 
-        # Creamos un objeto MIME base
-        adjunto_MIME = MIMEBase('application', 'octet-stream')
-        # Y le cargamos el archivo adjunto
-        adjunto_MIME.set_payload(archivo_adjunto.read())
-        # Codificamos el objeto en BASE64
-        encoders.encode_base64(adjunto_MIME)
-        # Agregamos una cabecera al objeto
-        adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
-        # Y finalmente lo agregamos al mensaje
-        mensaje.attach(adjunto_MIME)
+    # Abrimos el archivo que vamos a adjuntar
+    archivo_adjunto = open(ruta_adjunto, 'rb')
 
-        # Creamos la conexión con el servidor
-        sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    # Creamos un objeto MIME base
+    adjunto_MIME = MIMEBase('application', 'octet-stream')
+    # Y le cargamos el archivo adjunto
+    adjunto_MIME.set_payload(archivo_adjunto.read())
+    # Codificamos el objeto en BASE64
+    encoders.encode_base64(adjunto_MIME)
+    # Agregamos una cabecera al objeto
+    adjunto_MIME.add_header('Content-Disposition', "attachment; filename= %s" % nombre_adjunto)
+    # Y finalmente lo agregamos al mensaje
+    mensaje.attach(adjunto_MIME)
 
-        # Ciframos la conexión
-        sesion_smtp.starttls()
+    # Creamos la conexión con el servidor
+    sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
 
-        # Iniciamos sesión en el servidor
-        try:
-            sesion_smtp.login(remitente, contrasenna)
-        except:
-            showerror("Error", "No se pudo iniciar sesión.")
-        # Convertimos el objeto mensaje a texto
-        texto = mensaje.as_string()
+    # Ciframos la conexión
+    sesion_smtp.starttls()
 
-        # Enviamos el mensaje
-        try:
-            sesion_smtp.sendmail(remitente, destinatarios, texto)
-            showinfo("Éxito", "Se ha enviado el correo a: " + destinatarios + " con éxito.")
-        except:
-            showerror("Error", "No se pudo enviar el mensaje a: " + destinatarios)
-            return True
-
-        # Cerramos la conexión
-        sesion_smtp.quit()
-    else:
-        showerror("Error", "No hay conexión a Internet.")
+    # Iniciamos sesión en el servidor
+    try:
+        sesion_smtp.login(remitente, contrasenna)
+    except:
+        showerror("Error", "No se pudo iniciar sesión con el correo: " + remitente + " para enviar el mensaje."
+                  + "\nNo se pudo enviar el correo a: " + destinatarios)
         return True
+    # Convertimos el objeto mensaje a texto
+    texto = mensaje.as_string()
+
+    # Enviamos el mensaje
+    try:
+        sesion_smtp.sendmail(remitente, destinatarios, texto)
+        showinfo("Éxito", "Se ha enviado el correo a: " + destinatarios + " con éxito.")
+    except:
+        showerror("Error", "No se pudo enviar el mensaje a: " + destinatarios)
+        return True
+
+    # Cerramos la conexión
+    sesion_smtp.quit()
+
     return False
 
 def pantallaNuevoCorreo(correo, contrasenna):
@@ -243,6 +243,9 @@ def pantallaNuevoCorreo(correo, contrasenna):
                 ventanaCorreoNuevo.destroy()
         else:
             showerror("Error", "No hay conexión a Internet.")
+            return pantallaNuevoCorreo(correo, contrasenna)
+
+
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
     btn_Enviar.grid(row=5, column=0, padx=10, pady=10, sticky=NSEW)
@@ -310,35 +313,38 @@ def pantallaLogin():
         Entradas: NA
         Salidas: Retorna pantallaCorreoNuevo en caso de tener un inicio de sesión exitoso, sino retorna pantallaLogin
         """
-        correo = txt_Usuario.get().lower()
-        contrasenna = txt_Contrasenna.get()
+        if comprobarConexion():
+            correo = txt_Usuario.get().lower()
+            contrasenna = txt_Contrasenna.get()
 
-        # Comprobar que los espacios estén llenos
-        if correo == "":
-            showerror("Error", "El espacio correo no puede estar vacío.")
-            ventanaIniciarSesion.destroy()
-            return pantallaLogin()
-        elif contrasenna == "":
-            showerror("Error", "La espacio contraseña no puede estar vacío.")
-            ventanaIniciarSesion.destroy()
-            return pantallaLogin()
+            # Comprobar que los espacios estén llenos
+            if correo == "":
+                showerror("Error", "El espacio correo no puede estar vacío.")
+                ventanaIniciarSesion.destroy()
+                return pantallaLogin()
+            elif contrasenna == "":
+                showerror("Error", "La espacio contraseña no puede estar vacío.")
+                ventanaIniciarSesion.destroy()
+                return pantallaLogin()
 
-        # Creamos la conexión con el servidor
-        sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
+            # Creamos la conexión con el servidor
+            sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
 
-        # Ciframos la conexión
-        sesion_smtp.starttls()
+            # Ciframos la conexión
+            sesion_smtp.starttls()
 
-        # Iniciamos sesión en el servidor
-        try:
-            sesion_smtp.login(correo, contrasenna)
-            showinfo("Éxito", "Se ha iniciado sesión")
-            ventanaIniciarSesion.destroy()
-            return pantallaNuevoCorreo(correo, contrasenna)
-        except:
-            showerror("Error", "No se pudo iniciar sesión con la cuenta: " + correo)
-            ventanaIniciarSesion.destroy()
-            return pantallaLogin()
+            # Iniciamos sesión en el servidor
+            try:
+                sesion_smtp.login(correo, contrasenna)
+                showinfo("Éxito", "Se ha iniciado sesión")
+                ventanaIniciarSesion.destroy()
+                return pantallaNuevoCorreo(correo, contrasenna)
+            except:
+                showerror("Error", "No se pudo iniciar sesión con la cuenta: " + correo)
+                ventanaIniciarSesion.destroy()
+                return pantallaLogin()
+        else:
+            showerror("Error", "No hay conexión a Internet.")
 
     Button(ventanaIniciarSesion, text="Iniciar sesión", width=10, height=1, command=funcionBotonIniciarSesion,
            font="Helvetica").pack()
@@ -403,24 +409,27 @@ def funcionBotonShare():
                 Entradas: NA
                 Salidas: Habilita el btn_Share, btn_Buscar y txt_Buscar y abre la pantalla del login
                 """
-
-                frasesSeleccionadas = listbox_Frases.curselection()
-                if not len(frasesSeleccionadas) == 0:
-                    for frase in frasesSeleccionadas:
-                        separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
-                    generarListaEnviarCorreo()
-                    generarXML(frasesCorreo)
-                    pantallaLogin()
-                    btn_EnviarCorreo.place_forget()
-                    listbox_Frases.config(state="disable")
+                if comprobarConexion():
+                    frasesSeleccionadas = listbox_Frases.curselection()
+                    if not len(frasesSeleccionadas) == 0:
+                        for frase in frasesSeleccionadas:
+                            separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
+                        generarListaEnviarCorreo()
+                        generarXML(frasesCorreo)
+                        pantallaLogin()
+                        btn_EnviarCorreo.place_forget()
+                        listbox_Frases.config(state="disable")
+                    else:
+                        showerror("Error", "Debe seleccionar al menos una frase.")
                 else:
-                    showerror("Error", "Debe seleccionar al menos una frase.")
+                    showerror("Error", "No hay conexión a Internet")
 
             btn_EnviarCorreo = Button(frame, text="Enviar correo", command=funcionBotonEnviarCorreo, width=36, height=1)
             btn_EnviarCorreo.place(x=681, y=300)
             btn_EnviarCorreo.config(font="Helvetica")
             listbox_Frases.config(state="normal", selectmode=MULTIPLE)
-
+    else:
+        showerror("Error", "No hay conexión a Internet")
 
 def cerrarPrograma():
     """
