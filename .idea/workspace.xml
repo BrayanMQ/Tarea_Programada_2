@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasado al archivo funciones">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funciones.py" beforeDir="false" afterPath="$PROJECT_DIR$/funciones.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ventanaPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/frases.py" afterDir="false" />
+    <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Manual_usuario/manual_de_usuario_frases.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Manual_usuario/manual_de_usuario_frases.pdf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/funciones.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="289" lean-forward="true" selection-start-line="289" selection-end-line="289" />
+            <state relative-caret-position="223">
+              <caret line="287" column="59" lean-forward="true" selection-start-line="287" selection-start-column="59" selection-end-line="287" selection-end-column="59" />
               <folding>
                 <element signature="e#27#85#0" expanded="true" />
               </folding>
@@ -328,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557783701607</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasados al archivo funciones.py &#10;Creación de la carpeta &quot;Manual_usuario&quot; donde se guarda el manual de usuario&#10;Cambio de nombre de &quot;ventanaPrincipal&quot; a -&gt; &quot;frases&quot;">
+      <created>1557802567686</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1557802567686</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -342,6 +347,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1748879" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -446,7 +452,8 @@
     <MESSAGE value="Versión final 1.0" />
     <MESSAGE value="Versión final 1.1" />
     <MESSAGE value="Versión final 1.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Versión final 1.2" />
+    <MESSAGE value="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasados al archivo funciones.py &#10;Creación de la carpeta &quot;Manual_usuario&quot; donde se guarda el manual de usuario&#10;Cambio de nombre de &quot;ventanaPrincipal&quot; a -&gt; &quot;frases&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasados al archivo funciones.py &#10;Creación de la carpeta &quot;Manual_usuario&quot; donde se guarda el manual de usuario&#10;Cambio de nombre de &quot;ventanaPrincipal&quot; a -&gt; &quot;frases&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -555,8 +562,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/funciones.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="289" lean-forward="true" selection-start-line="289" selection-end-line="289" />
+        <state relative-caret-position="223">
+          <caret line="287" column="59" lean-forward="true" selection-start-line="287" selection-start-column="59" selection-end-line="287" selection-end-column="59" />
           <folding>
             <element signature="e#27#85#0" expanded="true" />
           </folding>
