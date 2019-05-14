@@ -119,7 +119,6 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
     Salidas: Envía el correo y cierra la conexión
     """
 
-
     # Iniciamos los parámetros del script
     ruta_adjunto = directorio[0]  # Lugar donde se encuentra el archivo
     nombre_adjunto = directorio[1]  # Nombre del archivo que se enviará
@@ -170,13 +169,17 @@ def enviarCorreo(remitente, contrasenna, destinatarios, asunto, cuerpo):
         sesion_smtp.sendmail(remitente, destinatarios, texto)
         showinfo("Éxito", "Se ha enviado el correo a: " + destinatarios + " con éxito.")
     except:
-        showerror("Error", "No se pudo enviar el mensaje a: " + destinatarios)
+        if destinatarios == "":
+            showerror("Error", "El destinatario no debe estar vacío.")
+        else:
+            showerror("Error", "No se pudo enviar el correo a: " + destinatarios)
         return True
 
     # Cerramos la conexión
     sesion_smtp.quit()
 
     return False
+
 
 def pantallaNuevoCorreo(correo, contrasenna):
     """
@@ -238,14 +241,11 @@ def pantallaNuevoCorreo(correo, contrasenna):
                     if mensaje == 'yes':
                         ventanaCorreoNuevo.destroy()
                         return pantallaNuevoCorreo(correo, contrasenna)
-                    else:
-                        activarMenuPrincipal()
+                activarMenuPrincipal()
                 ventanaCorreoNuevo.destroy()
         else:
             showerror("Error", "No hay conexión a Internet.")
             return pantallaNuevoCorreo(correo, contrasenna)
-
-
 
     btn_Enviar = Button(ventanaCorreoNuevo, text="Enviar", command=enviar)
     btn_Enviar.grid(row=5, column=0, padx=10, pady=10, sticky=NSEW)
@@ -263,7 +263,7 @@ def pantallaNuevoCorreo(correo, contrasenna):
     ventanaCorreoNuevo.protocol("WM_DELETE_WINDOW", cerrarVentana)
 
 
-def pantallaLogin():
+def pantallaLogin(correo=""):
     """
     Función: Muestra la pantalla del login
     Entradas: Na
@@ -286,6 +286,7 @@ def pantallaLogin():
     Label(ventanaIniciarSesion, text="Correo electrónico", bg="#5DA9F6", fg="white").pack()
 
     txt_Usuario = Entry(ventanaIniciarSesion, textvariable=username_verify)
+    txt_Usuario.insert(INSERT, correo)
     txt_Usuario.pack()
 
     Label(ventanaIniciarSesion, text="", bg="#5DA9F6").pack()
@@ -321,11 +322,11 @@ def pantallaLogin():
             if correo == "":
                 showerror("Error", "El espacio correo no puede estar vacío.")
                 ventanaIniciarSesion.destroy()
-                return pantallaLogin()
+                return pantallaLogin(correo)
             elif contrasenna == "":
                 showerror("Error", "La espacio contraseña no puede estar vacío.")
                 ventanaIniciarSesion.destroy()
-                return pantallaLogin()
+                return pantallaLogin(correo)
 
             # Creamos la conexión con el servidor
             sesion_smtp = smtplib.SMTP('smtp.gmail.com', 587)
@@ -342,7 +343,8 @@ def pantallaLogin():
             except:
                 showerror("Error", "No se pudo iniciar sesión con la cuenta: " + correo)
                 ventanaIniciarSesion.destroy()
-                return pantallaLogin()
+                return pantallaLogin(correo)
+
         else:
             showerror("Error", "No hay conexión a Internet.")
 
@@ -403,6 +405,23 @@ def funcionBotonShare():
             showinfo("Información", "Seleccione las frases que desee compartir.")
             desactivarMenuPrincipal()
 
+            def funcionBotonContinuarBusqueda():
+                """
+                Función: Permite continuar con la busqueda más frases
+                Entrada: NA
+                Salida: NA
+                """
+                activarMenuPrincipal()
+                btn_ContinuarBusqueda.destroy()
+                btn_EnviarCorreo.destroy()
+                listbox_Frases.config(state="disable")
+
+            # Creación botón continuarBusqueda
+            btn_ContinuarBusqueda = Button(frame, text="Continuar búsqueda", command=funcionBotonContinuarBusqueda,
+                                           width=36, height=1)
+            btn_ContinuarBusqueda.place(x=681, y=146)
+            btn_ContinuarBusqueda.config(font="Helvetica")
+
             def funcionBotonEnviarCorreo():
                 """
                 Función: Prepara toda la información necesaria para enviar un correo
@@ -419,8 +438,10 @@ def funcionBotonShare():
                         pantallaLogin()
                         btn_EnviarCorreo.place_forget()
                         listbox_Frases.config(state="disable")
+                        btn_ContinuarBusqueda.destroy()
                     else:
                         showerror("Error", "Debe seleccionar al menos una frase.")
+
                 else:
                     showerror("Error", "No hay conexión a Internet")
 
@@ -430,6 +451,7 @@ def funcionBotonShare():
             listbox_Frases.config(state="normal", selectmode=MULTIPLE)
     else:
         showerror("Error", "No hay conexión a Internet")
+
 
 def cerrarPrograma():
     """

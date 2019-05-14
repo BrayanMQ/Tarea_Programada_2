@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60428a71-6547-4ec0-8933-f274721ddfc5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Manual_usuario/manual_de_usuario_frases.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Manual_usuario/manual_de_usuario_frases.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frases.py" beforeDir="false" afterPath="$PROJECT_DIR$/frases.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,20 +13,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frases.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="478" column="79" selection-start-line="478" selection-start-column="79" selection-end-line="478" selection-end-column="79" />
+            <state relative-caret-position="102">
+              <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/funciones.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="287" column="59" lean-forward="true" selection-start-line="287" selection-start-column="59" selection-end-line="287" selection-end-column="59" />
+            <state relative-caret-position="289">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
               <folding>
                 <element signature="e#27#85#0" expanded="true" />
               </folding>
@@ -44,13 +45,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>destr</find>
-      <find>ventanaCorreoNuevo.destroy()</find>
       <find>enviarcorr</find>
       <find>no se pudo</find>
       <find>destinatarios</find>
       <find>arch</find>
-      <find>generar</find>
       <find>generarnombre</find>
       <find>len(listaMatriz)</find>
       <find>len(</find>
@@ -68,12 +66,15 @@
       <find>funcionbotonbus</find>
       <find>funcion</find>
       <find>desea re</find>
-      <find>share</find>
       <find>errorrei</find>
       <find>manu</find>
       <find>.xml</find>
-      <find>generarnom</find>
       <find>manual</find>
+      <find>generarnom</find>
+      <find>share</find>
+      <find>generar</find>
+      <find>#</find>
+      <find>generarcodi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -86,6 +87,7 @@
         <option value="$PROJECT_DIR$/backUp.xml" />
         <option value="$PROJECT_DIR$/../../test/main.py" />
         <option value="$PROJECT_DIR$/ventanaPrincipal.py" />
+        <option value="$PROJECT_DIR$/frases.py" />
         <option value="$PROJECT_DIR$/funciones.py" />
       </list>
     </option>
@@ -109,6 +111,11 @@
               <item name="Tarea_Programada_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tarea_Programada_2" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Tarea_Programada_2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tarea_Programada_2" type="462c0819:PsiDirectoryNode" />
+              <item name="Archivos_correo" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -131,7 +138,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ventanaPrincipal">
+  <component name="RunManager" selected="Python.frases">
+    <configuration name="frases" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TareaProgramada_2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/frases.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="funciones" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TareaProgramada_2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,6 +225,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.frases" />
         <item itemvalue="Python.ventanaPrincipal" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.funciones" />
@@ -333,7 +362,21 @@
       <option name="project" value="LOCAL" />
       <updated>1557802567686</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Versión final 1.4&#10;&#10;Pequeños cambios al manual de usuario.">
+      <created>1557803049433</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1557803049434</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Versión final 1.5&#10;&#10;Pequeños cambios al manual de usuario 2.0 :V">
+      <created>1557803206484</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1557803206484</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -453,7 +496,9 @@
     <MESSAGE value="Versión final 1.1" />
     <MESSAGE value="Versión final 1.2" />
     <MESSAGE value="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasados al archivo funciones.py &#10;Creación de la carpeta &quot;Manual_usuario&quot; donde se guarda el manual de usuario&#10;Cambio de nombre de &quot;ventanaPrincipal&quot; a -&gt; &quot;frases&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Versión final 1.3&#10;&#10;Métodos del barMenú comentados y pasados al archivo funciones.py &#10;Creación de la carpeta &quot;Manual_usuario&quot; donde se guarda el manual de usuario&#10;Cambio de nombre de &quot;ventanaPrincipal&quot; a -&gt; &quot;frases&quot;" />
+    <MESSAGE value="Versión final 1.4&#10;&#10;Pequeños cambios al manual de usuario." />
+    <MESSAGE value="Versión final 1.5&#10;&#10;Pequeños cambios al manual de usuario 2.0 :V" />
+    <option name="LAST_COMMIT_MESSAGE" value="Versión final 1.5&#10;&#10;Pequeños cambios al manual de usuario 2.0 :V" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -553,20 +598,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frases.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="478" column="79" selection-start-line="478" selection-start-column="79" selection-end-line="478" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/funciones.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="287" column="59" lean-forward="true" selection-start-line="287" selection-start-column="59" selection-end-line="287" selection-end-column="59" />
+        <state relative-caret-position="289">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#27#85#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
         </state>
       </provider>
     </entry>
