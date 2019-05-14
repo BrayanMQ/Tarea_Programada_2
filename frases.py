@@ -1,6 +1,6 @@
 # Realizado por: Brayan Steven Marín Quirós y Ronny Jiménez Bonilla
-# Fecha de creación: 02/04/2019 10:00am
-# Última modificación: 02/04/2019 11:20pm
+# Fecha de creación: 02/05/2019 10:00am
+# Última modificación: 13/05/2019 10:30pm
 # Versión: 3.7.2
 
 # Importación de funciones
@@ -467,18 +467,12 @@ root.iconbitmap("imagenes/icon.ico")
 root.geometry("+400+200")
 root.resizable(0, 0)
 
-def mostrarDesarrolladores():
-    showinfo("Desarrolladores", "Realizado por Ronny Jiménez Bonilla y Brayan Marín Quirós.")
-    return ""
-
-def abrirManualUsuario():
-    os.popen("manual_de_usuario_frases.pdf")
-
 # Creación frame
 frame = Frame()
 frame.pack()
 frame.config(width=800, height=625, bg="#5DA9F6")
 
+# Creación del menúBar
 menubar = Menu(frame)
 acercaDeMenu = Menu(menubar, tearoff=0)
 acercaDeMenu.add_command(label="Desarrolladores", command=mostrarDesarrolladores)

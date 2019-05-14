@@ -1,3 +1,8 @@
+# Realizado por: Brayan Steven Marín Quirós y Ronny Jiménez Bonilla
+# Fecha de creación: 02/05/2019 10:00am
+# Última modificación: 13/05/2019 10:30pm
+# Versión: 3.7.2
+
 # Importación de funciones
 from socket import gethostbyname, create_connection, error
 from tkinter.messagebox import showinfo, showerror
@@ -38,6 +43,7 @@ def graba(nomArchGrabar, raiz):
     except:
         print("\nError al grabar el archivo: \n", nomArchGrabar)
 
+
 def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
     """
     Función: Genera la matriz principal
@@ -75,6 +81,7 @@ def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
 
     return ""
 
+
 def generarCodigoContador(num):
     """
     Función: Genera el código que contiene el contador de los personajes
@@ -90,6 +97,7 @@ def generarCodigoContador(num):
 
     return codigo
 
+
 def generarCodigoAplicacion(nombre):
     """
     Función: Genera el código de cada personaje
@@ -100,6 +108,7 @@ def generarCodigoAplicacion(nombre):
     serial = generarCodigoContador(len(listaMatriz) + 1)
     codigo = "#" + nombre[0] + serial + "-" + nombre[ultimaLetra].upper()
     return codigo
+
 
 def obtenerPersonajeMasFrases(pMayorCantidadFrases):
     """
@@ -119,6 +128,7 @@ def obtenerPersonajeMasFrases(pMayorCantidadFrases):
                     break
     return nombrePersonaje
 
+
 def comprobarConexion():
     """
     Función: Comprueba si hay conexión a Internet
@@ -133,6 +143,7 @@ def comprobarConexion():
     except error:
         return False
 
+
 def generarNombreArchivo():
     """
     Función: Genera el nombre del archivo según la fecha y hora actual
@@ -142,6 +153,7 @@ def generarNombreArchivo():
     nombreArchivo = time.strftime("%d-%m-%Y-%H-%M-%S")
     nombreArchivo = "\share-" + nombreArchivo + ".xml"
     return nombreArchivo
+
 
 def generarDiccionario(nombre):
     """
@@ -160,6 +172,7 @@ def generarDiccionario(nombre):
             dicc[codigoPersonaje] = cantidadFrases
             return dicc
 
+
 def verificarFrase(id):
     """
     Función: Verifica que la frase no esté guardada
@@ -170,6 +183,7 @@ def verificarFrase(id):
         if id in fila[2]:
             return True
     return False
+
 
 def separarNombre(frase):
     """
@@ -199,6 +213,7 @@ def separarNombre(frase):
             return nombre
     return "Error"
 
+
 def obtenerFrase(frase, nombre):
     """
     Función: Obtiene la frase del aPI
@@ -222,6 +237,7 @@ def obtenerFrase(frase, nombre):
 
     return fraseFinal
 
+
 def separarFrasesSeleccionadas(frase):
     """
     Función: Separa las frases seleccionadas en el listbox para obtener una lista con la frase y el personaje
@@ -232,6 +248,7 @@ def separarFrasesSeleccionadas(frase):
     listaDividir = frase.split(" Personaje: ")
     listaFrasesSeleccionadas.append(listaDividir)
     return ""
+
 
 def generarListaEnviarCorreo():
     """
@@ -251,3 +268,22 @@ def generarListaEnviarCorreo():
                         generarMatriz(id, frase, personaje, fila[3], correo=True)
     return ""
 
+
+def mostrarDesarrolladores():
+    """
+    Función: Muestra una ventana emergente con la información de los desarrolladores.
+    Entradas: NA
+    Salidas: Retorna ""
+    """
+    showinfo("Desarrolladores", "Realizado por Ronny Jiménez Bonilla y Brayan Marín Quirós.")
+    return ""
+
+
+def abrirManualUsuario():
+    """
+    Función: Muestra el manual de usuario de la aplicación.
+    Entradas: NA
+    Salidas: Retorna ""
+    """
+    os.popen("Manual_usuario\manual_de_usuario_frases.pdf")
+    return ""
