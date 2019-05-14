@@ -94,18 +94,19 @@ def generarXML(pLista, backUp=False):
             codigo.text = personajeMatriz[3]
             cantApariciones.text = str(dicc[personajeMatriz[3]])
 
-            try:
-                os.mkdir("Archivos_correo")
-            except:
-                if backUp:
-                    graba(archivoBackUp, raiz)
-                else:
-                    archivoCorreo = generarNombreArchivo()
-                    file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
-                    archivoCorreo = archivoCorreo[1:]
-                    directorio.append(file_Path)
-                    directorio.append(archivoCorreo)
-                    graba(directorio[0], raiz)
+        if backUp:
+            graba(archivoBackUp, raiz)
+        else:
+            reiniciarDirectorio = []
+            directorio = reiniciarDirectorio # Esto se hace para enviar los nevos datos de un nuevo archivo
+            crearCarpetaArchivosCorreo()
+            archivoCorreo = generarNombreArchivo()
+            file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
+            archivoCorreo = archivoCorreo[1:]
+            directorio.append(file_Path)
+            directorio.append(archivoCorreo)
+            graba(directorio[0], raiz)
+
     else:
         showinfo("Error", "No hay frases por guardar.")
     return ""
@@ -547,7 +548,7 @@ btn_Share.config(font="Helvetica")
 
 # Creación label apariciones
 lbl_Apariciones = Label(frame, text="Personaje con más frases: ")
-lbl_Apariciones.place(x=681, y=425)
+lbl_Apariciones.place(x=675, y=425)
 lbl_Apariciones.config(font="Helvetica", fg="white", bg="#5DA9F6")
 
 # Creación botón buscar

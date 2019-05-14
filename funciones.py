@@ -287,3 +287,14 @@ def abrirManualUsuario():
     """
     os.popen("Manual_usuario\manual_de_usuario_frases.pdf")
     return ""
+
+def crearCarpetaArchivosCorreo():
+    """
+    Función: Crea la carpeta "Archivos_correo" en caso de no existir
+    Entrada: MA
+    Salida: Retorna ""
+    """
+    try:
+        os.mkdir("Archivos_correo")
+    except:
+        return ""
