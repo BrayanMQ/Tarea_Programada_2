@@ -59,6 +59,7 @@ def generarMatriz(id, frase, nombre, codigoAplicacion="", correo=False):
                 fila[2].append(id)
                 return ""
     else:
+        frasesCorreo.clear() #Reinicia la lista frasesCorreo
         for fila in frasesCorreo:
             if fila[0] == nombre:
                 fila[1].append(frase)

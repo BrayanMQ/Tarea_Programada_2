@@ -97,9 +97,9 @@ def generarXML(pLista, backUp=False):
         if backUp:
             graba(archivoBackUp, raiz)
         else:
-            reiniciarDirectorio = []
-            directorio = reiniciarDirectorio # Esto se hace para enviar los nevos datos de un nuevo archivo
+            directorio.clear() #Reinicia la lista directorio
             crearCarpetaArchivosCorreo()
+
             archivoCorreo = generarNombreArchivo()
             file_Path = os.getcwd() + "\Archivos_correo" + archivoCorreo
             archivoCorreo = archivoCorreo[1:]
@@ -432,6 +432,7 @@ def funcionBotonShare():
                 if comprobarConexion():
                     frasesSeleccionadas = listbox_Frases.curselection()
                     if not len(frasesSeleccionadas) == 0:
+                        listaFrasesSeleccionadas.clear() #Reinicia la listaFrasesSeleccionadas
                         for frase in frasesSeleccionadas:
                             separarFrasesSeleccionadas(listbox_Frases.get(frase, last=None))
                         generarListaEnviarCorreo()
