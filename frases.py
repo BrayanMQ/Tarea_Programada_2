@@ -1,6 +1,6 @@
 # Realizado por: Brayan Steven Marín Quirós y Ronny Jiménez Bonilla
 # Fecha de creación: 02/05/2019 10:00am
-# Última modificación: 13/05/2019 10:30pm
+# Última modificación: 14/05/2019 08:30pm
 # Versión: 3.7.2
 
 # Importación de funciones
